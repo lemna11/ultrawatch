@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cdxoq0qg3kl0"]
+
+[ext_resource type="Script" uid="uid://dst8h8yjsdskg" path="res://Weapons/WeaponResource.cs" id="1_pgs88"]
+[ext_resource type="PackedScene" uid="uid://cqcvccxl4x27k" path="res://Weapons/Shotgun/Shotgun.tscn" id="2_mjqf7"]
+
+[resource]
+script = ExtResource("1_pgs88")
+weapon_offset = Vector3(0.3, -0.3, -0.2)
+weapon_model = ExtResource("2_mjqf7")

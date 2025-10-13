@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqcvccxl4x27k"]
+
+[ext_resource type="Script" uid="uid://c1pauhgcjeshw" path="res://Weapons/Shotgun/Shotgun.cs" id="1_axhlk"]
+[ext_resource type="PackedScene" uid="uid://ui6lmawt6ync" path="res://Weapons/Shotgun/blaster-g.glb" id="1_tqfqr"]
+[ext_resource type="PackedScene" uid="uid://be1b1kl3j2no0" path="res://Weapons/Shotgun/Decal.tscn" id="2_x3vbk"]
+
+[sub_resource type="Animation" id="Animation_axhlk"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blaster-g2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_tqfqr"]
+resource_name = "Shoot"
+length = 0.33
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blaster-g2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.22, 1, 0, 0, 0.1, 0.33, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x3vbk"]
+_data = {
+&"RESET": SubResource("Animation_axhlk"),
+&"Shoot": SubResource("Animation_tqfqr")
+}
+
+[node name="Shotgun" type="Node3D" node_paths=PackedStringArray("pellet_spawn_point")]
+script = ExtResource("1_axhlk")
+pellet_spawn_point = NodePath("blaster-g2/PelletSpawn")
+spread_angle = 5.0
+fire_rate = 2.0
+decal_scene = ExtResource("2_x3vbk")
+
+[node name="blaster-g2" parent="." instance=ExtResource("1_tqfqr")]
+
+[node name="PelletSpawn" type="Node3D" parent="blaster-g2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07939918, -0.35567433)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_x3vbk")
+}

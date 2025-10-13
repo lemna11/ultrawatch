@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dy0ijw6m636ks"]
+
+[ext_resource type="Script" uid="uid://b5lvcpe7ldsfl" path="res://Weapons/RocketLauncher/Rocket.cs" id="1_mb00p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5vt7"]
+radius = 0.1
+height = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mb00p"]
+radius = 0.1
+height = 0.4
+
+[node name="Rocket" type="Area3D" node_paths=PackedStringArray("life_timer")]
+transform = Transform3D(1.9106853e-15, 4.371139e-08, 1, 1, -4.371139e-08, 2.646978e-22, 4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_mb00p")
+life_timer = NodePath("Timer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_v5vt7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_mb00p")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true

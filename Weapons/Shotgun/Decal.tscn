@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://be1b1kl3j2no0"]
+
+[ext_resource type="Texture2D" uid="uid://bu3tjr4y8w17f" path="res://floor.png" id="1_kvx23"]
+[ext_resource type="Script" uid="uid://nc1i6wghe4gp" path="res://Weapons/Shotgun/Pellet.cs" id="2_hd5d2"]
+
+[node name="Decal" type="Decal"]
+size = Vector3(0.1, 0.001, 0.1)
+texture_albedo = ExtResource("1_kvx23")
+script = ExtResource("2_hd5d2")
