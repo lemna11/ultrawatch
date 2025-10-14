@@ -1,18 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://drsd633k8ogd4"]
+[gd_scene load_steps=8 format=3 uid="uid://drsd633k8ogd4"]
 
 [ext_resource type="PackedScene" uid="uid://bramy17x2yihq" path="res://Weapons/RocketLauncher/blaster-h.glb" id="1_7mp4c"]
 [ext_resource type="Script" uid="uid://dffybjfrrg5dd" path="res://Weapons/RocketLauncher/RocketLauncher.cs" id="1_u2tl0"]
 [ext_resource type="PackedScene" uid="uid://dy0ijw6m636ks" path="res://Weapons/RocketLauncher/Rocket.tscn" id="2_5ct63"]
-
-[sub_resource type="Animation" id="Animation_7mp4c"]
-resource_name = "Shoot"
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("blaster-h2")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0, 0.3, 0.45, 1, 0, 0, -0.1, 1, 1, 0, 0, 0)
 
 [sub_resource type="Animation" id="Animation_u2tl0"]
 length = 0.001
@@ -24,8 +14,37 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
 
+[sub_resource type="Animation" id="Animation_7mp4c"]
+resource_name = "Shoot"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blaster-h2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0, 0.3, 0.45, 1, 0, 0, -0.1, 1, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_5ct63"]
+resource_name = "Equip"
+length = 0.66
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blaster-h2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.423, 0, 0, 0.906, 0.66, 1, 0, 0, 0, 1)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blaster-h2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, -0.2, -0.2, 0.66, 1, 0, 0, 0)
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ct63"]
 _data = {
+&"Equip": SubResource("Animation_5ct63"),
 &"RESET": SubResource("Animation_u2tl0"),
 &"Shoot": SubResource("Animation_7mp4c")
 }
@@ -36,14 +55,14 @@ rocket_spawn_point = NodePath("blaster-h2/RocketSpawnPoint")
 rocket_scene = ExtResource("2_5ct63")
 
 [node name="blaster-h2" parent="." instance=ExtResource("1_7mp4c")]
+transform = Transform3D(1, 0, 0, 0, 0.6420579, 0.76665616, 0, -0.76665616, 0.6420579, 0, 0, 0)
 
 [node name="RocketSpawnPoint" type="Node3D" parent="blaster-h2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028265089, -0.47338563)
-
-[node name="RocketSpawnPoint" type="Node3D" parent="blaster-h2/RocketSpawnPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028265089, -0.47338563)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_5ct63")
 }
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]

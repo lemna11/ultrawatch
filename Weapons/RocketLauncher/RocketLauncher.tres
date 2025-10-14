@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dbc28sfdj5j6f"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dbc28sfdj5j6f"]
 
 [ext_resource type="Script" uid="uid://dst8h8yjsdskg" path="res://Weapons/WeaponResource.cs" id="1_vh26j"]
 [ext_resource type="PackedScene" uid="uid://drsd633k8ogd4" path="res://Weapons/RocketLauncher/RocketLauncher.tscn" id="2_3mkxw"]
+[ext_resource type="AudioStream" uid="uid://cxlvvrywgdk2" path="res://Weapons/RocketLauncher/Shoot.mp3" id="2_yltdt"]
 
 [resource]
 script = ExtResource("1_vh26j")
 weapon_offset = Vector3(0.2, -0.3, -0.1)
 weapon_model = ExtResource("2_3mkxw")
+shoot_sound = ExtResource("2_yltdt")

@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://b5lvcpe7ldsfl" path="res://Weapons/RocketLauncher/Rocket.cs" id="1_mb00p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5vt7"]
-radius = 0.1
-height = 0.4
+radius = 0.15
+height = 0.6
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mb00p"]
 radius = 0.1
@@ -14,6 +14,7 @@ height = 0.4
 transform = Transform3D(1.9106853e-15, 4.371139e-08, 1, 1, -4.371139e-08, 2.646978e-22, 4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
 script = ExtResource("1_mb00p")
 life_timer = NodePath("Timer")
+move_speed = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_v5vt7")

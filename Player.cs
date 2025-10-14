@@ -1,5 +1,4 @@
-public partial class Player : CharacterBody3D
-{
+public partial class Player : CharacterBody3D {
     [Export]
     public Node3D camera_yaw;
 
@@ -15,25 +14,20 @@ public partial class Player : CharacterBody3D
     [Export]
     public float mouse_sensitivity = 3.0f;
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
         base._Process(delta);
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta) {
         HandleMovement(delta);
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured)
-        {
+    public override void _Input(InputEvent @event) {
+        if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
             // default godot sens is absurdly high, so we scale it down
             camera_yaw.RotateY(-mouseMotion.Relative.X * mouse_sensitivity * 0.00166666667f);
             camera_pitch.RotateX(-mouseMotion.Relative.Y * mouse_sensitivity * 0.00166666667f);
@@ -45,19 +39,16 @@ public partial class Player : CharacterBody3D
             );
         }
         // quick hack to toggle mouse capture
-        else if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
-        {
+        else if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape) {
             if (Input.MouseMode == Input.MouseModeEnum.Captured)
                 Input.MouseMode = Input.MouseModeEnum.Visible;
             else
                 Input.MouseMode = Input.MouseModeEnum.Captured;
-        }
-        else
+        } else
             base._Input(@event);
     }
 
-    private void HandleMovement(double delta)
-    {
+    private void HandleMovement(double delta) {
         Vector3 direction = Vector3.Zero;
         Basis cameraBasis = camera_yaw.GlobalTransform.Basis;
 
