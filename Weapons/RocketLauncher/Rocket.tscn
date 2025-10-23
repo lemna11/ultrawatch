@@ -1,20 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy0ijw6m636ks"]
+[gd_scene load_steps=6 format=3 uid="uid://dy0ijw6m636ks"]
 
 [ext_resource type="Script" uid="uid://b5lvcpe7ldsfl" path="res://Weapons/RocketLauncher/Rocket.cs" id="1_mb00p"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mb00p"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5vt7"]
-radius = 0.15
-height = 0.6
+radius = 0.1
+height = 0.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mb00p"]
 radius = 0.1
 height = 0.4
 
-[node name="Rocket" type="Area3D" node_paths=PackedStringArray("life_timer")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_mb00p"]
+radius = 1.0
+
+[node name="Rocket" type="RigidBody3D" node_paths=PackedStringArray("_life_timer", "_explosion_area")]
 transform = Transform3D(1.9106853e-15, 4.371139e-08, 1, 1, -4.371139e-08, 2.646978e-22, 4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_mb00p")
+gravity_scale = 0.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_mb00p")
-life_timer = NodePath("Timer")
-move_speed = 30.0
+_life_timer = NodePath("Timer")
+_move_speed = 40.0
+_explosion_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_v5vt7")
@@ -26,3 +38,10 @@ mesh = SubResource("CapsuleMesh_mb00p")
 wait_time = 10.0
 one_shot = true
 autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_mb00p")

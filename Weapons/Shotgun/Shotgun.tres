@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_pgs88")
-weapon_offset = Vector3(0.3, -0.3, -0.2)
+damage = 6.0
+weapon_offset = Vector3(0, -0.2, -0.3)
 weapon_model = ExtResource("2_mjqf7")
 shoot_sound = ExtResource("2_7wus3")

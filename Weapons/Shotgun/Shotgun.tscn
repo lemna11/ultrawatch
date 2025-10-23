@@ -1,18 +1,36 @@
 [gd_scene load_steps=8 format=3 uid="uid://cqcvccxl4x27k"]
 
 [ext_resource type="Script" uid="uid://c1pauhgcjeshw" path="res://Weapons/Shotgun/Shotgun.cs" id="1_axhlk"]
-[ext_resource type="PackedScene" uid="uid://ui6lmawt6ync" path="res://Weapons/Shotgun/blaster-g.glb" id="1_tqfqr"]
 [ext_resource type="PackedScene" uid="uid://be1b1kl3j2no0" path="res://Weapons/Shotgun/Decal.tscn" id="2_x3vbk"]
+[ext_resource type="PackedScene" uid="uid://cx5uu5swkdd2v" path="res://Weapons/Shotgun/shotgun.fbx" id="3_x3vbk"]
 
-[sub_resource type="Animation" id="Animation_axhlk"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_x3vbk"]
+resource_name = "Equip"
+length = 0.33
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blaster-g2")
+tracks/0/path = NodePath("shotgun")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, -0.4, -0.3, 0.33, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("shotgun")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.317, 0, 0, 0.948, 0.33, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_axhlk"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("shotgun")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_tqfqr"]
 resource_name = "Shoot"
@@ -20,28 +38,17 @@ length = 0.33
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blaster-g2")
+tracks/0/path = NodePath("shotgun")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.22, 1, 0, 0, 0.1, 0.33, 1, 0, 0, 0)
-
-[sub_resource type="Animation" id="Animation_x3vbk"]
-resource_name = "Equip"
-length = 0.33
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("blaster-g2")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -0.5, 0, 0, 0.866, 0.32, 1, 0, 0, 0, 1)
-tracks/1/type = "position_3d"
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0.15, 0, 0.3, 0.33, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blaster-g2")
+tracks/1/path = NodePath("shotgun")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, -0.4, -0.2, 0.32, 1, 0, 0, 0)
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.1, 1, 0.216, 0, 0, 0.976, 0.33, 1, 0, 0, 0, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x3vbk"]
 _data = {
@@ -52,16 +59,10 @@ _data = {
 
 [node name="Shotgun" type="Node3D" node_paths=PackedStringArray("pellet_spawn_point")]
 script = ExtResource("1_axhlk")
-pellet_spawn_point = NodePath("blaster-g2/PelletSpawn")
+pellet_spawn_point = NodePath("shotgun/PelletSpawn")
 spread_angle = 5.0
 fire_rate = 2.0
 decal_scene = ExtResource("2_x3vbk")
-
-[node name="blaster-g2" parent="." instance=ExtResource("1_tqfqr")]
-transform = Transform3D(1, 0, 0, 0, 0.49997798, 0.86603814, 0, -0.86603814, 0.49997798, 0, 0, 0)
-
-[node name="PelletSpawn" type="Node3D" parent="blaster-g2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07939918, -0.35567433)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -69,3 +70,9 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[node name="shotgun" parent="." instance=ExtResource("3_x3vbk")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="PelletSpawn" type="Node3D" parent="shotgun"]
+transform = Transform3D(2.5, 0, 0, 0, 1.2499449, 2.1650953, 0, -2.1650953, 1.2499449, 0.01634338, 0.25348967, -2.27)
