@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://ceqy8rsnkb044"]
+
+[ext_resource type="Script" uid="uid://dolpjbpmc0s5t" path="res://TargetDummy.cs" id="1_2gus0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2gus0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jofcf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7rg0w"]
+
+[sub_resource type="SystemFont" id="SystemFont_2gus0"]
+
+[node name="TargetDummy" type="RigidBody3D" node_paths=PackedStringArray("label")]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_2gus0")
+can_sleep = false
+freeze_mode = 1
+script = ExtResource("1_2gus0")
+label = NodePath("Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jofcf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_7rg0w")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 2
+font = SubResource("SystemFont_2gus0")

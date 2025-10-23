@@ -21,4 +21,6 @@ public partial class WeaponResource : Resource {
     public AudioStream shoot_sound;
 
     public bool can_fire = true;
+
+    public Node3D player_camera;
 }
