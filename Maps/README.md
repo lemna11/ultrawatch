@@ -1,0 +1,1 @@
+I dunno how we should structure maps, this is just a wild guess for how we *could* do it
