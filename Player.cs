@@ -26,10 +26,10 @@ public partial class Player : CharacterBody3D {
 	public float jump_vert_vel = 4.5f;
 
 	[Export]
-	public float jump_hor_accel = 18.0f;
+	public float jump_hor_accel = 12.0f;
 
 	[Export]
-	public float stomp_accel = 20.0f;
+	public float stomp_accel = 60.0f;
 
 	[Export]
 	public float mouse_sensitivity = 3.0f;
@@ -42,26 +42,23 @@ public partial class Player : CharacterBody3D {
 		return Mathf.Sqrt(input.X * input.X + input.Z * input.Z);
 	}
 	public Vector3 KillMomentumProportionalHelper(Vector3 velocity_vector, double deccel) {
-		if (velocity_vector.X == 0 && velocity_vector.Z == 0) {
-			return velocity_vector;
-		}
-		if (Mathf.Abs(velocity_vector.X) > Mathf.Abs(velocity_vector.Z)) {
-			float new_x_speed = Mathf.MoveToward(velocity_vector.X, 0, (float)deccel);
-			double multiplier_for_z = new_x_speed / velocity_vector.X;
-			velocity_vector.X = new_x_speed;
-			velocity_vector.Z = (float)(velocity_vector.Z * multiplier_for_z);
-		} else {
-			float new_z_speed = Mathf.MoveToward(velocity_vector.Z, 0, (float)deccel);
-			double multiplier_for_x = new_z_speed / velocity_vector.Z;
-			velocity_vector.Z = new_z_speed;
-			velocity_vector.X = (float)(velocity_vector.X * multiplier_for_x);
-		}
-		return velocity_vector;
+		var vect_len = HorLenHelper(velocity_vector);
+		float new_vect_len = (float)Mathf.MoveToward(vect_len, 0, deccel);
+		var vect_normal = HorNormalHelper(velocity_vector);
+		var new_velocity = vect_normal * new_vect_len;
+		new_velocity.Y = velocity_vector.Y;
+		return new_velocity;
 	}
 	public Vector3 KillMomentumOnAxisHelper(Vector3 velocity_vector, Vector3 orientation, double deccel) {
-		velocity_vector.X = Mathf.MoveToward(velocity_vector.X, 0, (float)Mathf.Abs(orientation.X * deccel));
-		velocity_vector.Z = Mathf.MoveToward(velocity_vector.Z, 0, (float)Mathf.Abs(orientation.Z * deccel));
-		return velocity_vector;
+		Vector3 new_vect = velocity_vector;
+		Vector3 return_vect = Vector3.Zero;
+		new_vect.X = Mathf.MoveToward(velocity_vector.X, 0, (float)Mathf.Abs(orientation.X * deccel  ));
+		new_vect.Z = Mathf.MoveToward(velocity_vector.Z, 0, (float)Mathf.Abs(orientation.Z * deccel ));
+		Vector3 new_vect_normal = HorNormalHelper(new_vect);
+		return_vect.X = new_vect_normal.X * (float)(HorLenHelper(velocity_vector) - deccel * 0.5); // I have no fucking idea why I have to put the *0.5 there. If I dont put it there the decceleration is twice the deccel intended when counterstrafing
+		return_vect.Z = new_vect_normal.Z * (float)(HorLenHelper(velocity_vector) - deccel * 0.5);
+		return_vect.Y = velocity_vector.Y;
+		return return_vect;
 	}
 
 	public Vector3 RescaleVector1ToVector2Helper(Vector3 vect1, Vector3 vect2) {
@@ -90,6 +87,17 @@ public partial class Player : CharacterBody3D {
 		return output;
 	}
 
+	private bool IsCounterStrafingHelper(Vector3 orientation, Vector3 velocity) {
+		if(velocity == Vector3.Zero) {
+			return false;
+		}
+		Vector3 diff_vect = orientation - HorNormalHelper(velocity);
+		double angle = Mathf.Asin((HorLenHelper(diff_vect) / 2)) * 2;
+		if (Mathf.Abs(angle) <= Mathf.Pi / 2) {
+			return false;
+		}
+		return true;
+	}
 	public override void _Ready() {
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
@@ -165,11 +173,69 @@ public partial class Player : CharacterBody3D {
 			velocity.Y = jump_vert_vel;
 		}
 		if (any_input && IsOnFloor()) {//input on ground
-			if (HorLenHelper(velocity) <= move_speed + 0.1f) {
-				velocity.X = direction.X * (move_speed);
-				velocity.Z = direction.Z * (move_speed);
+			if (HorLenHelper(velocity) <= move_speed) {
+				velocity.X = direction.X * move_speed;
+				velocity.Z = direction.Z * move_speed;
 			}
 
+
+			if (input_crouch) {
+				Vector3 candidate_vector = velocity;
+				if (input_foward) {
+					candidate_vector += orientation * crouch_slide_accel * (float)delta;
+				} else if (input_back) {
+					candidate_vector -= orientation * crouch_slide_accel * (float)delta;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, orientation, universal_deccel * delta);
+				}
+
+
+				if (input_right) {
+					candidate_vector += quarter_cirle_right_rotated_orientation * crouch_slide_accel * (float)delta;
+				} else if (input_left) {
+					candidate_vector -= quarter_cirle_right_rotated_orientation * crouch_slide_accel * (float)delta;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, quarter_cirle_right_rotated_orientation, universal_deccel * delta);
+				}
+
+				if (HorLenHelper(candidate_vector) <= crouch_slide_velocity) {
+					velocity = candidate_vector;
+				} else {
+					candidate_vector = RescaleVector1ToVector2Helper(candidate_vector, velocity);
+					var adj_factor = Mathf.MoveToward(HorLenHelper(candidate_vector), crouch_slide_velocity, universal_deccel * delta);
+					candidate_vector = HorNormalHelper(candidate_vector) * (float)adj_factor;
+					candidate_vector.Y = velocity.Y;
+					velocity = candidate_vector;
+				}
+			} else if (HorLenHelper(velocity) > move_speed) {
+				Vector3 candidate_vector = velocity;
+				if (input_foward) {
+					candidate_vector += orientation * jump_hor_accel * (float)delta;
+				} else if (input_back) {
+					candidate_vector -= orientation * jump_hor_accel * (float)delta;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, orientation, universal_deccel * delta);
+				}
+
+
+				if (input_right) {
+					candidate_vector += quarter_cirle_right_rotated_orientation * jump_hor_accel * (float)delta;
+				} else if (input_left) {
+					candidate_vector -= quarter_cirle_right_rotated_orientation * jump_hor_accel * (float)delta;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, quarter_cirle_right_rotated_orientation, universal_deccel * delta);
+				}
+
+				if (HorLenHelper(candidate_vector) <= move_speed) {
+					velocity = candidate_vector;
+				} else {
+					candidate_vector = RescaleVector1ToVector2Helper(candidate_vector, velocity);
+					var adj_factor = Mathf.MoveToward(HorLenHelper(candidate_vector), move_speed, universal_deccel * delta);
+					candidate_vector = HorNormalHelper(candidate_vector) * (float)adj_factor;
+					candidate_vector.Y = velocity.Y;
+					velocity = candidate_vector;
+				}
+			}
 
 		} else if (no_input && IsOnFloor()) {//no input on ground
 			if (HorLenHelper(velocity) <= move_speed + 0.1f) {
@@ -184,49 +250,77 @@ public partial class Player : CharacterBody3D {
 				stomp_active = true;
 			}
 			Vector3 candidate_vector = velocity;
+			int foward_input = 0;
+			int side_input = 0;
+			bool foward_accel = false;
+			bool side_accel = false;
 			if (input_foward) {
-				candidate_vector += orientation * jump_hor_accel * (float)delta;
-			} else if (input_back) {
-				candidate_vector -= orientation * jump_hor_accel * (float)delta;
-			} else {
-				candidate_vector = KillMomentumOnAxisHelper(candidate_vector, orientation, universal_deccel * delta);
+				foward_input++;
 			}
-
-
+			if (input_back) {
+				foward_input--;
+			}
 			if (input_right) {
-				candidate_vector += quarter_cirle_right_rotated_orientation * jump_hor_accel * (float)delta;
-			} else if (input_left) {
-				candidate_vector -= quarter_cirle_right_rotated_orientation * jump_hor_accel * (float)delta;
-			} else {
-				candidate_vector = KillMomentumOnAxisHelper(candidate_vector, quarter_cirle_right_rotated_orientation, universal_deccel * delta);
+				side_input++;
 			}
-
-			if (HorLenHelper(candidate_vector) <= move_speed) {
-				velocity = candidate_vector;
+			if (input_left) {
+				side_input--;
+			}
+			if (foward_input != 0) {
+				if (!IsCounterStrafingHelper(orientation * foward_input, velocity)) {
+					foward_accel = true;
+				}
+			}
+			if (side_input != 0) {
+				if (!IsCounterStrafingHelper(quarter_cirle_right_rotated_orientation * side_input, velocity)) {
+					side_accel = true;
+				}
+			}
+			GD.Print(foward_accel);
+			GD.Print(side_accel);
+			if (foward_accel && side_accel) {
+				candidate_vector = candidate_vector + (orientation * (float)delta * foward_input * jump_hor_accel);
+				candidate_vector = candidate_vector + (quarter_cirle_right_rotated_orientation * (float)delta * side_input * jump_hor_accel);
+				var new_vel_normal = HorNormalHelper(candidate_vector);
+				velocity = new_vel_normal * (float)(HorLenHelper(velocity) + (jump_hor_accel * delta));
+				velocity.Y = candidate_vector.Y;
 			} else {
-				candidate_vector = RescaleVector1ToVector2Helper(candidate_vector, velocity);
-				var adj_factor = Mathf.MoveToward(HorLenHelper(candidate_vector), move_speed, universal_deccel * delta);
-				candidate_vector = HorNormalHelper(candidate_vector) * (float)adj_factor;
-				candidate_vector.Y = velocity.Y;
+				if (foward_accel) {
+					candidate_vector = candidate_vector + (orientation * (float)delta * foward_input * jump_hor_accel);
+					var new_vel_normal = HorNormalHelper(candidate_vector);
+					candidate_vector = new_vel_normal * (float)(HorLenHelper(velocity) + (jump_hor_accel * delta));
+					candidate_vector.Y = velocity.Y;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, orientation, universal_deccel * delta);
+				}
+				if (side_accel) {
+					candidate_vector = candidate_vector + (quarter_cirle_right_rotated_orientation * (float)delta * side_input * jump_hor_accel);
+					var new_vel_normal = HorNormalHelper(candidate_vector);
+					candidate_vector = new_vel_normal * (float)(HorLenHelper(velocity) + (jump_hor_accel * delta));
+					candidate_vector.Y = velocity.Y;
+				} else {
+					candidate_vector = KillMomentumOnAxisHelper(candidate_vector, quarter_cirle_right_rotated_orientation, universal_deccel * delta);
+				}
 				velocity = candidate_vector;
 			}
 			
-		} else if (no_input && !IsOnFloor()) {//no input when airborne
+
+		} else if (no_input && !IsOnFloor()) {//no input when airborne			
+			velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
+
+			
+
 			if (input_crouch || stomp_active) {
-				velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
 				velocity.Y -= stomp_accel * (float)delta;
 				stomp_active = true;
-			} else {
-				if (HorLenHelper(velocity) <= move_speed) {
-					velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
-				} else {
-					velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
-				}
 			}
 		}
 		var total_vel = HorLenHelper(velocity);
+		var delta_vel = Mathf.Abs(HorLenHelper(Velocity) - total_vel);
+		var delta_x = Mathf.Abs(Velocity.X - velocity.X);
+		var delta_z = Mathf.Abs(Velocity.Z - velocity.Z);
 		GD.Print(total_vel);
-		GD.Print(orientation);
+		GD.Print(delta_vel);
 		Velocity = velocity;
 		MoveAndSlide();
 	}
