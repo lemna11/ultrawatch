@@ -1,24 +1,21 @@
 [gd_scene load_steps=7 format=3 uid="uid://ndeyauh2tfu4"]
 
 [ext_resource type="PackedScene" uid="uid://csdr2fk3caunx" path="res://Player.tscn" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://ceqy8rsnkb044" path="res://TargetDummy.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://ckwlrwarsrybl" path="res://Maps/MovementPlayground.tscn" id="3_r0du0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_glv2v"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Sky" id="Sky_uu6xs"]
+[sub_resource type="Sky" id="Sky_cm0pq"]
 sky_material = SubResource("ProceduralSkyMaterial_glv2v")
 
 [sub_resource type="Environment" id="Environment_r0du0"]
 background_mode = 2
-sky = SubResource("Sky_uu6xs")
+sky = SubResource("Sky_cm0pq")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_uu6xs"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r0du0"]
-data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="Main" type="Node3D"]
 
@@ -36,13 +33,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("PlaneMesh_uu6xs")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_r0du0")
-
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_glv2v")]
+stomp_accel = 200.0
+
+[node name="TargetDummy" parent="." instance=ExtResource("2_uu6xs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3102164, 0.18420464, 3.7713456)
+
+[node name="MovementPlayground" parent="." instance=ExtResource("3_r0du0")]
