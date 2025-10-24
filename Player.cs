@@ -1,7 +1,3 @@
-using System.Runtime.CompilerServices;
-
-using Godot.NativeInterop;
-
 public partial class Player : CharacterBody3D {
     [Export]
     public Node3D camera_yaw;
@@ -36,6 +32,15 @@ public partial class Player : CharacterBody3D {
     [Export]
     public float mouse_sensitivity = 3.0f;
 
+    [Export]
+    public bool double_jmp_enabled = true;
+
+    [Export]
+    public bool stomp_enabled = true;
+    private bool double_jmp_active = false;
+
+    private bool initial_jmp_press = false;
+    private bool initial_jmp_release = false;
     private bool crouch_locked = false;
 
     private bool stomp_active = false;
@@ -130,27 +135,33 @@ public partial class Player : CharacterBody3D {
         if (foward_axis != 0) {
             if (!IsCounterStrafingHelper(foward_orientaion * foward_axis, velocity)) {
                 foward_accel = true;
+            } else {
+                foward_axis = -foward_axis;
             }
         }
         if (side_axis != 0) {
             if (!IsCounterStrafingHelper(right_orientation * side_axis, velocity)) {
                 side_accel = true;
+            } else {
+                side_axis = -side_axis;
             }
         }
         if (foward_accel && side_accel) {
-            velocity += direction * accel * (float)delta;
+            velocity += direction * accel * (float)delta;  
         } else if (!foward_accel && !side_accel) {
             velocity = KillMomentumProportionalHelper(velocity, deccel * delta);
         } else {
             if (foward_accel) {
                 velocity += foward_orientaion * (float)(foward_axis * delta * accel);
             } else {
-                velocity -= foward_orientaion * (float)(foward_axis * delta * deccel);
+                velocity.X -= (foward_orientaion.X * ((float)(foward_axis * delta * deccel)));
+                velocity.Z -= (foward_orientaion.Z * ((float)(foward_axis * delta * deccel)));
             }
             if (side_accel) {
                 velocity += right_orientation * (float)(side_axis * delta * accel);
             } else {
-                velocity -= right_orientation * (float)(side_axis * delta * deccel);
+                velocity.X -= (right_orientation.X * ((float)(side_axis * delta * deccel)));
+                velocity.Z -= (right_orientation.Z * ((float)(side_axis * delta * deccel)));
             }
         }
         if (HorLenHelper(velocity) > max_spd) {
@@ -201,10 +212,11 @@ public partial class Player : CharacterBody3D {
         bool input_back = Input.IsActionPressed("move_back");
         bool input_left = Input.IsActionPressed("move_left");
         bool input_right = Input.IsActionPressed("move_right");
+        bool input_crouch = Input.IsActionPressed("move_crouch");
+        bool input_jmp = Input.IsActionPressed("move_jump");
         bool[] inputs = { input_foward, input_back, input_left, input_right };
         var any_input = input_foward || input_back || input_left || input_right;
         var no_input = !any_input;
-        var input_crouch = Input.IsActionPressed("move_crouch");
         var velocity = Velocity;
         if (input_foward)
             direction -= cameraBasis.Z;
@@ -229,21 +241,67 @@ public partial class Player : CharacterBody3D {
         }
 
         if (no_input && IsOnFloor()) {//no input on floor
-            velocity.X = 0;
-            velocity.Z = 0;
+            stomp_active = false;
+            double_jmp_active = false;
+            initial_jmp_press = false;
+            initial_jmp_release = false;
+            if (HorLenHelper(velocity) > move_speed) {
+                velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
+            } else {
+                velocity.X = 0;
+                velocity.Z = 0;
+            }
         } else if (any_input && IsOnFloor()) {//no input on floor
-            velocity.X = direction.X * move_speed;
-            velocity.Z = direction.Z * move_speed;
-        } else if (no_input && !IsOnFloor()) {//no input when airborne			
+            stomp_active = false;
+            double_jmp_active = false;
+            initial_jmp_press = false;
+            initial_jmp_release = false;
+            if (HorLenHelper(velocity) > move_speed) {
+                velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
+            } else {
+                velocity.X = direction.X * move_speed;
+                velocity.Z = direction.Z * move_speed;
+            }
+        } else if (no_input && !IsOnFloor()) {//no input when airborne		
+            if (input_crouch && stomp_enabled) {
+                velocity.Y -= stomp_accel * (float)delta;
+                stomp_active = true;
+            }
+            if (input_jmp && !initial_jmp_press) {
+                initial_jmp_press = true;
+            }
+            if (!input_jmp && initial_jmp_press) {
+                initial_jmp_release = true;
+            }
+            if (!double_jmp_active && input_jmp && initial_jmp_release) {
+                velocity.Y = jump_vert_vel;
+                double_jmp_active = true;
+            }
             velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
         } else if (any_input && !IsOnFloor()) {//input when airborne
-            velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, move_speed);
+            if (input_crouch && stomp_enabled) {
+                velocity.Y -= stomp_accel * (float)delta;
+                stomp_active = true;
+            }
+            if (input_crouch && stomp_enabled) {
+                velocity.Y -= stomp_accel * (float)delta;
+                stomp_active = true;
+            }
+            if (input_jmp && !initial_jmp_press) {
+                initial_jmp_press = true;
+            }
+            if (!input_jmp && initial_jmp_press) {
+                initial_jmp_release = true;
+            }
+            if (!double_jmp_active && input_jmp && initial_jmp_release) {
+                velocity.Y = jump_vert_vel;
+                double_jmp_active = true;
+                velocity.X = direction.X * move_speed;
+                velocity.Z = direction.Z * move_speed;
+            } else {
+                velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, move_speed);
+            }
         }
-        var total_vel = HorLenHelper(velocity);
-        var delta_vel = Mathf.Abs(HorLenHelper(Velocity) - total_vel);
-        var delta_x = Mathf.Abs(Velocity.X - velocity.X);
-        var delta_z = Mathf.Abs(Velocity.Z - velocity.Z);
-        GD.Print(total_vel);
         Velocity = velocity;
         MoveAndSlide();
     }
