@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://c38gwiaon4v2u"]
+
+[ext_resource type="Script" uid="uid://bduqjmlod20kb" path="res://UI/Hud.cs" id="1_gppie"]
+[ext_resource type="Texture2D" uid="uid://bdr0gx5en043u" path="res://UI/crosshair/crosshair-dot.svg" id="2_2ptjp"]
+[ext_resource type="Texture2D" uid="uid://palrdgk0wybs" path="res://UI/crosshair/crosshair-left-outline.svg" id="3_md4fy"]
+[ext_resource type="Texture2D" uid="uid://choy1mfq25g8w" path="res://UI/crosshair/crosshair-right-outline.svg" id="5_rbci0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uk570"]
+font_size = 32
+font_color = Color(0, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f2wx0"]
+font_size = 46
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gppie"]
+font_size = 32
+font_color = Color(0, 1, 0, 1)
+
+[node name="Hud" type="Control" node_paths=PackedStringArray("max_health", "cur_health")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gppie")
+max_health = NodePath("HealthView/CurHealth")
+cur_health = NodePath("HealthView/MaxHealth")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_2ptjp")
+
+[node name="TextureRect2" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("3_md4fy")
+
+[node name="TextureRect4" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("5_rbci0")
+
+[node name="HealthView" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.8
+anchor_right = 0.2
+anchor_bottom = 0.93
+offset_top = 0.17596436
+offset_right = -0.31999207
+grow_vertical = 0
+alignment = 1
+
+[node name="CurHealth" type="Label" parent="HealthView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_uk570")
+
+[node name="Separator" type="Label" parent="HealthView"]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_f2wx0")
+
+[node name="MaxHealth" type="Label" parent="HealthView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_gppie")
+horizontal_alignment = 2
