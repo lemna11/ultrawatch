@@ -1,7 +1,3 @@
-using System.Runtime.CompilerServices;
-
-using Godot.NativeInterop;
-
 public partial class Player : CharacterBody3D {
     [Export]
     public Node3D camera_yaw;
@@ -169,7 +165,6 @@ public partial class Player : CharacterBody3D {
             }
         }
         if (HorLenHelper(velocity) > max_spd) {
-            GD.Print("max speed triggered");
             velocity = KillMomentumProportionalHelper(velocity, deccel * delta);
         }
         return velocity;
@@ -275,10 +270,10 @@ public partial class Player : CharacterBody3D {
             if (input_jmp && !initial_jmp_press) {
                 initial_jmp_press = true;
             }
-            if(!input_jmp && initial_jmp_press) {
+            if (!input_jmp && initial_jmp_press) {
                 initial_jmp_release = true;
             }
-            if(!double_jmp_active && input_jmp && initial_jmp_release) {
+            if (!double_jmp_active && input_jmp && initial_jmp_release) {
                 velocity.Y = jump_vert_vel;
                 double_jmp_active = true;
             }
@@ -295,7 +290,7 @@ public partial class Player : CharacterBody3D {
             if (input_jmp && !initial_jmp_press) {
                 initial_jmp_press = true;
             }
-            if(!input_jmp && initial_jmp_press) {
+            if (!input_jmp && initial_jmp_press) {
                 initial_jmp_release = true;
             }
             if (!double_jmp_active && input_jmp && initial_jmp_release) {
@@ -307,11 +302,6 @@ public partial class Player : CharacterBody3D {
                 velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, move_speed);
             }
         }
-        var total_vel = HorLenHelper(velocity);
-        var delta_vel = Mathf.Abs(HorLenHelper(Velocity) - total_vel);
-        var delta_x = Mathf.Abs(Velocity.X - velocity.X);
-        var delta_z = Mathf.Abs(Velocity.Z - velocity.Z);
-        GD.Print(delta_vel);
         Velocity = velocity;
         MoveAndSlide();
     }
