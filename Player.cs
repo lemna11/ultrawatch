@@ -1,4 +1,4 @@
-public partial class Player : CharacterBody3D {
+public partial class Player : CharacterBody3D, ITarget {
     [Export]
     public Node3D camera_yaw;
 
@@ -37,6 +37,14 @@ public partial class Player : CharacterBody3D {
 
     [Export]
     public bool stomp_enabled = true;
+
+    [Export]
+    public int max_health = 100;
+
+    public int cur_health;
+
+    public Action update_hud;
+
     private bool double_jmp_active = false;
 
     private bool initial_jmp_press = false;
@@ -48,6 +56,7 @@ public partial class Player : CharacterBody3D {
     public float HorLenHelper(Vector3 input) {
         return Mathf.Sqrt(input.X * input.X + input.Z * input.Z);
     }
+
     public Vector3 KillMomentumProportionalHelper(Vector3 velocity_vector, double deccel) {
         var vect_len = HorLenHelper(velocity_vector);
         float new_vect_len = (float)Mathf.MoveToward(vect_len, 0, deccel);
@@ -56,6 +65,7 @@ public partial class Player : CharacterBody3D {
         new_velocity.Y = velocity_vector.Y;
         return new_velocity;
     }
+
     public Vector3 KillMomentumOnAxisHelper(Vector3 velocity_vector, Vector3 orientation, double deccel) {
         var vect_len = HorLenHelper(velocity_vector);
         Vector3 new_vect = velocity_vector;
@@ -70,7 +80,6 @@ public partial class Player : CharacterBody3D {
         return_vect.Z = new_vect_normal.Z * return_vect_scalar;
         return_vect.Y = velocity_vector.Y;
         return return_vect;
-
     }
 
     public Vector3 RescaleVector1ToVector2Helper(Vector3 vect1, Vector3 vect2) {
@@ -172,6 +181,7 @@ public partial class Player : CharacterBody3D {
 
     public override void _Ready() {
         Input.MouseMode = Input.MouseModeEnum.Captured;
+        cur_health = max_health;
     }
 
     public override void _Process(double delta) {
@@ -181,7 +191,6 @@ public partial class Player : CharacterBody3D {
     public override void _PhysicsProcess(double delta) {
         HandleMovement(delta);
     }
-
 
     public override void _Input(InputEvent @event) {
         if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
@@ -304,6 +313,11 @@ public partial class Player : CharacterBody3D {
         }
         Velocity = velocity;
         MoveAndSlide();
+    }
+
+    public void TakeDamage(WeaponResource weapon) {
+        cur_health = 0 > cur_health - weapon.damage ? 0 : (int)(cur_health - weapon.damage);
+        update_hud();
     }
 
 }
