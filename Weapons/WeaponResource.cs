@@ -23,6 +23,8 @@ public partial class WeaponResource : Resource {
     [Export]
     public AudioStream shoot_sound;
 
+    public Timer timer;
+
     public bool can_fire = true;
 
     public Node3D player_camera;

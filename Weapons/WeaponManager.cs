@@ -19,8 +19,6 @@ public partial class WeaponManager : Node3D {
     private Node3D _current_right_weapon_instance;
     private Node3D _current_left_weapon_instance;
 
-    private Timer _timer;
-
     private async void UpdateWeaponModel(string weaponPath = null, EquipSide side = EquipSide.Right) {
         if (weaponPath != null) {
             switch (side) {
@@ -53,8 +51,6 @@ public partial class WeaponManager : Node3D {
             if (current_weapon_instance is not null) {
                 (current_weapon_instance as IWeapon).Unequip(current_weapon);
                 current_weapon_instance.QueueFree();
-                _timer?.Stop();
-                _timer?.QueueFree();
             }
             if (weapon_holder is not null && current_weapon.weapon_model is not null) {
                 current_weapon.player_camera = player.GetNode<Node3D>("CameraYaw/CameraPitch/Camera3D");
@@ -133,16 +129,16 @@ public partial class WeaponManager : Node3D {
     private void ShootAgainIn(WeaponResource current_weapon, float seconds) {
         if (current_weapon is null) return;
         current_weapon.can_fire = false;
-        _timer = new Timer() {
+        current_weapon.timer = new Timer() {
             WaitTime = seconds,
             OneShot = true,
             Autostart = true
         };
-        _timer.Timeout += () => {
+        current_weapon.timer.Timeout += () => {
             current_weapon.can_fire = true;
-            _timer.QueueFree();
-            _timer = null;
+            current_weapon.timer.QueueFree();
+            current_weapon.timer = null;
         };
-        AddChild(_timer);
+        AddChild(current_weapon.timer);
     }
 }
