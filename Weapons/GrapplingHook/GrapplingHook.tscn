@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dejpobebgcdbt"]
+
+[ext_resource type="Script" uid="uid://buxivuv5jfwgh" path="res://Weapons/GrapplingHook/GrapplingHook.cs" id="1_syqb2"]
+[ext_resource type="PackedScene" uid="uid://vdxm4r6hb7b3" path="res://Weapons/GrapplingHook/Hook.tscn" id="2_im2vo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8oxv2"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8oxv2"]
+material = SubResource("StandardMaterial3D_8oxv2")
+radius = 0.05
+height = 0.4
+
+[node name="GrapplingHook" type="Node3D"]
+script = ExtResource("1_syqb2")
+hook_scene = ExtResource("2_im2vo")
+
+[node name="GrapplingHookModel" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GrapplingHookModel"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_8oxv2")

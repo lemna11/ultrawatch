@@ -48,7 +48,7 @@ public partial class Shotgun : Node3D, IWeapon {
         }
     }
 
-    public void Shoot(WeaponResource weapon) {
+    public void Shoot(WeaponResource weapon, Player _) {
         for (int i = 0; i < pellet_count; i++) {
             FirePellet(weapon);
         }

@@ -6,7 +6,10 @@ public partial class WeaponResource : Resource {
     public float fire_rate = 1.0f;
 
     [Export]
-    public Vector3 weapon_offset = new(0, 0, 0);
+    public Vector3 right_arm_weapon_offset = new(0, 0, 0);
+
+    [Export]
+    public Vector3 left_arm_weapon_offset = new(0, 0, 0);
 
     [Export]
     public PackedScene weapon_model;

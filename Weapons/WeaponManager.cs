@@ -1,4 +1,9 @@
 public partial class WeaponManager : Node3D {
+    private enum EquipSide {
+        Right,
+        Left
+    }
+
     [Export]
     public CharacterBody3D player;
 
@@ -6,17 +11,39 @@ public partial class WeaponManager : Node3D {
     public Node3D weapon_holder;
 
     [Export]
-    public WeaponResource current_weapon;
+    public WeaponResource right_current_weapon;
+
+    [Export]
+    public WeaponResource left_current_weapon;
 
     private Node3D _current_weapon_instance;
 
     private Timer _timer;
 
-    private async void UpdateWeaponModel(string weaponPath = null) {
+    private async void UpdateWeaponModel(string weaponPath = null, EquipSide side = EquipSide.Right) {
         if (weaponPath != null) {
-            current_weapon = ResourceLoader.Load<WeaponResource>(weaponPath);
+            switch (side) {
+                case EquipSide.Right:
+                    right_current_weapon = ResourceLoader.Load<WeaponResource>(weaponPath);
+                    break;
+                case EquipSide.Left:
+                    left_current_weapon = ResourceLoader.Load<WeaponResource>(weaponPath);
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
         }
+        var current_weapon = side switch {
+            EquipSide.Right => right_current_weapon,
+            EquipSide.Left => left_current_weapon,
+            _ => throw new NotSupportedException()
+        };
         if (current_weapon is not null) {
+            var weapon_position = side switch {
+                EquipSide.Right => right_current_weapon.right_arm_weapon_offset,
+                EquipSide.Left => right_current_weapon.left_arm_weapon_offset,
+                _ => throw new NotSupportedException()
+            };
             if (_current_weapon_instance is not null) {
                 (_current_weapon_instance as IWeapon).Unequip(current_weapon);
                 _current_weapon_instance.QueueFree();
@@ -30,7 +57,7 @@ public partial class WeaponManager : Node3D {
                     GD.PrintErr("The weapon model does not implement IWeapon interface.");
                     throw new InvalidOperationException("The weapon model does not implement IWeapon interface.");
                 }
-                _current_weapon_instance.Position = current_weapon.weapon_offset;
+                _current_weapon_instance.Position = weapon_position;
                 weapon_holder.CallDeferred(Node.MethodName.AddChild, _current_weapon_instance);
                 await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
                 current_weapon.can_fire = false;
@@ -42,23 +69,27 @@ public partial class WeaponManager : Node3D {
                     var waitTime = animationPlayer.GetAnimation(current_weapon.equip_animation).Length;
                     ShootAgainIn(waitTime);
                     PlayAnimation(current_weapon.equip_animation);
+                } else {
+                    current_weapon.can_fire = true;
                 }
             }
         }
     }
 
     public override void _Process(double delta) {
-        if (Input.IsActionPressed("fire") && current_weapon.can_fire && _current_weapon_instance is not null) {
-            (_current_weapon_instance as IWeapon).Shoot(current_weapon);
-            ShootAgainIn(1.0f / current_weapon.fire_rate);
-            PlayAnimation(current_weapon.shoot_animation);
-            PlaySound(current_weapon.shoot_sound);
+        if (Input.IsActionPressed("fire") && right_current_weapon.can_fire && _current_weapon_instance is not null) {
+            (_current_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
+            ShootAgainIn(1.0f / right_current_weapon.fire_rate);
+            PlayAnimation(right_current_weapon.shoot_animation);
+            PlaySound(right_current_weapon.shoot_sound);
         }
 
-        if (Input.IsKeyPressed(Key.Key1) && current_weapon?.can_fire is true or null && _current_weapon_instance is not Shotgun) {
+        if (Input.IsKeyPressed(Key.Key1) && right_current_weapon?.can_fire is true or null && _current_weapon_instance is not Shotgun) {
             UpdateWeaponModel("res://Weapons/Shotgun/Shotgun.tres");
-        } else if (Input.IsKeyPressed(Key.Key2) && current_weapon?.can_fire is true or null && _current_weapon_instance is not RocketLauncher) {
+        } else if (Input.IsKeyPressed(Key.Key2) && right_current_weapon?.can_fire is true or null && _current_weapon_instance is not RocketLauncher) {
             UpdateWeaponModel("res://Weapons/RocketLauncher/RocketLauncher.tres");
+        } else if (Input.IsKeyPressed(Key.Key3) && right_current_weapon?.can_fire is true or null && _current_weapon_instance is not GrapplingHook) {
+            UpdateWeaponModel("res://Weapons/GrapplingHook/GrapplingHook.tres", EquipSide.Left);
         }
     }
 
@@ -81,15 +112,15 @@ public partial class WeaponManager : Node3D {
     }
 
     private void ShootAgainIn(float seconds) {
-        if (current_weapon is null) return;
-        current_weapon.can_fire = false;
+        if (right_current_weapon is null) return;
+        right_current_weapon.can_fire = false;
         _timer = new Timer() {
             WaitTime = seconds,
             OneShot = true,
             Autostart = true
         };
         _timer.Timeout += () => {
-            current_weapon.can_fire = true;
+            right_current_weapon.can_fire = true;
             _timer.QueueFree();
             _timer = null;
         };
