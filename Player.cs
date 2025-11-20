@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 public partial class Player : CharacterBody3D, ITarget {
 	[Export]
 	public Node3D camera_yaw;
@@ -33,10 +35,14 @@ public partial class Player : CharacterBody3D, ITarget {
 	public float mouse_sensitivity = 3.0f;
 
 	[Export]
-	public bool double_jmp_enabled = true;
+	public bool double_jmp_enabled = false;
 
 	[Export]
 	public bool stomp_enabled = true;
+
+    [Export]
+
+    public bool wall_jmp_enabled = true;
 
 	[Export]
 	public int max_health = 100;
@@ -51,6 +57,11 @@ public partial class Player : CharacterBody3D, ITarget {
 	private bool initial_jmp_release = false;
 	private bool crouch_locked = false;
 
+	private bool wall_jmped = false;
+	private float wall_jmp_spd_bump = 4.0f;
+	private float wall_stick_grvty = 24.0f;
+	private float wall_jmp_normal_vel = 3.0f;
+	private bool wall_run_active = false;
 	private bool stomp_active = false;
 
 	public float HorLenHelper(Vector3 input) {
@@ -169,7 +180,7 @@ public partial class Player : CharacterBody3D, ITarget {
 		} else if (!foward_accel && !side_accel) {
 			velocity = KillMomentumProportionalHelper(velocity, deccel * delta);
 		} else {
-			if (foward_accel) {
+			sssdif (foward_accel) {
 				velocity += foward_orientaion * (float)(foward_axis * delta * accel);
 			} else {
 				velocity.X -= (foward_orientaion.X * ((float)(foward_axis * delta * deccel)));
@@ -249,7 +260,7 @@ public partial class Player : CharacterBody3D, ITarget {
 		orientation -= cameraBasis.Z;
 		Vector3 quarter_cirle_right_rotated_orientation = cameraBasis.X;
 		//apply gravity
-		if (!IsOnFloor()) {
+		if (!IsOnFloor() && !wall_run_active) {
 			Vector3 gravity = GetGravity();
 			velocity += (gravity * (float)delta);
 		}
@@ -258,7 +269,25 @@ public partial class Player : CharacterBody3D, ITarget {
 			velocity.Y = jump_vert_vel;
 		}
 
+		if(!IsOnFloor() && IsOnWall() && !wall_jmped && wall_jmp_enabled) {
+			Vector3 wall_normal = GetWallNormal();
+			velocity -= wall_normal * wall_stick_grvty * (float)delta;
+			velocity.Y = Mathf.MoveToward(velocity.Y, 0, universal_deccel * (float)delta);
+			wall_run_active = true;
+			if (Input.IsActionJustPressed("move_jump")) {
+				velocity += wall_normal * wall_jmp_normal_vel;
+				velocity += direction * wall_jmp_spd_bump;
+				velocity.Y = jump_vert_vel;
+				//wall_jmped = true;
+			} else {
+				velocity.X -= wall_normal.X * wall_stick_grvty * (float)delta;
+				velocity.Z -= wall_normal.Z * wall_stick_grvty * (float)delta;
+			}
+		} else {
+			wall_run_active = false;
+		}
 		if (no_input && IsOnFloor()) {//no input on floor
+			wall_jmped = false;
 			stomp_active = false;
 			double_jmp_active = false;
 			initial_jmp_press = false;
@@ -269,7 +298,8 @@ public partial class Player : CharacterBody3D, ITarget {
 				velocity.X = 0;
 				velocity.Z = 0;
 			}
-		} else if (any_input && IsOnFloor()) {//no input on floor
+		} else if (any_input && IsOnFloor()) {//input on floor
+			wall_jmped = false;
 			stomp_active = false;
 			double_jmp_active = false;
 			initial_jmp_press = false;
@@ -291,7 +321,7 @@ public partial class Player : CharacterBody3D, ITarget {
 			if (!input_jmp && initial_jmp_press) {
 				initial_jmp_release = true;
 			}
-			if (!double_jmp_active && input_jmp && initial_jmp_release) {
+			if (!double_jmp_active && input_jmp && initial_jmp_release && double_jmp_enabled) {
 				velocity.Y = jump_vert_vel;
 				double_jmp_active = true;
 			}
@@ -311,7 +341,7 @@ public partial class Player : CharacterBody3D, ITarget {
 			if (!input_jmp && initial_jmp_press) {
 				initial_jmp_release = true;
 			}
-			if (!double_jmp_active && input_jmp && initial_jmp_release) {
+			if (!double_jmp_active && input_jmp && initial_jmp_release &&double_jmp_enabled) {
 				velocity.Y = jump_vert_vel;
 				double_jmp_active = true;
 				velocity.X = direction.X * move_speed;
