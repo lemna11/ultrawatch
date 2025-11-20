@@ -40,9 +40,9 @@ public partial class Player : CharacterBody3D, ITarget {
 	[Export]
 	public bool stomp_enabled = true;
 
-    [Export]
+	[Export]
 
-    public bool wall_jmp_enabled = true;
+	public bool wall_jmp_enabled = true;
 
 	[Export]
 	public int max_health = 100;
@@ -350,7 +350,6 @@ public partial class Player : CharacterBody3D, ITarget {
 				velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, move_speed);
 			}
 		}
-		GD.Print(direction);
 		Velocity = velocity;
 		MoveAndSlide();
 	}
