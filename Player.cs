@@ -11,6 +11,9 @@ public partial class Player : CharacterBody3D, ITarget {
 	public float move_speed = 6.0f;
 
 	[Export]
+	public float crouch_speed = 3.0f;
+
+	[Export]
 	public float crouch_slide_velocity = 12.0f;
 
 	[Export]
@@ -41,12 +44,19 @@ public partial class Player : CharacterBody3D, ITarget {
 	public bool stomp_enabled = true;
 
 	[Export]
-
-	public bool wall_jmp_enabled = true;
-
+	public bool wall_jmp_enabled = false;
+	[Export]
+	public bool hover_jet_enabled = false;
 	[Export]
 	public int max_health = 100;
+	[Export]
+	public bool charge_jump_enabled = true;
 
+	private float charge_jump_stored_jump_vel = 0;
+	private float max_charge_jump_vel = 12.0f;
+
+	private float charge_jmp_charge_gain = 4.0f;
+	private float hover_jet_move_speed = 12.0f;
 	public int cur_health;
 
 	public Action update_hud;
@@ -266,7 +276,16 @@ public partial class Player : CharacterBody3D, ITarget {
 		}
 		//jump case
 		if (Input.IsActionPressed("move_jump") && IsOnFloor()) {
-			velocity.Y = jump_vert_vel;
+			if (charge_jump_enabled) {
+				if(charge_jump_stored_jump_vel > max_charge_jump_vel){
+					velocity.Y = max_charge_jump_vel;
+				}
+				velocity.Y = charge_jump_stored_jump_vel;
+				charge_jump_stored_jump_vel = jump_vert_vel;
+			}
+			else{
+				velocity.Y = jump_vert_vel;
+			}
 		}
 
 		if(!IsOnFloor() && IsOnWall() && !wall_jmped && wall_jmp_enabled) {
@@ -287,16 +306,28 @@ public partial class Player : CharacterBody3D, ITarget {
 			wall_run_active = false;
 		}
 		if (no_input && IsOnFloor()) {//no input on floor
-			wall_jmped = false;
-			stomp_active = false;
-			double_jmp_active = false;
-			initial_jmp_press = false;
-			initial_jmp_release = false;
-			if (HorLenHelper(velocity) > move_speed) {
-				velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
-			} else {
-				velocity.X = 0;
-				velocity.Z = 0;
+			if(hover_jet_enabled) {
+			   velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
+			}
+			else{
+				wall_jmped = false;
+				stomp_active = false;
+				double_jmp_active = false;
+				initial_jmp_press = false;
+				initial_jmp_release = false;
+				if (HorLenHelper(velocity) > move_speed) {
+					velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
+				} else {
+					if (Input.IsActionPressed("move_crouch")) {
+						if (charge_jump_enabled) {
+							charge_jump_stored_jump_vel += charge_jmp_charge_gain * (float)delta;
+						}
+					} else {
+						charge_jump_stored_jump_vel = jump_vert_vel;
+					}
+					velocity.X = 0;
+					velocity.Z = 0;
+				}
 			}
 		} else if (any_input && IsOnFloor()) {//input on floor
 			wall_jmped = false;
@@ -304,16 +335,34 @@ public partial class Player : CharacterBody3D, ITarget {
 			double_jmp_active = false;
 			initial_jmp_press = false;
 			initial_jmp_release = false;
-			if (HorLenHelper(velocity) > move_speed) {
-				velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
-			} else {
-				velocity.X = direction.X * move_speed;
-				velocity.Z = direction.Z * move_speed;
+			if (hover_jet_enabled) {
+				velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, hover_jet_move_speed);
+			}
+			else{
+				if (HorLenHelper(velocity) > move_speed) {
+					velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, 0, universal_deccel, delta, move_speed);
+				} else {
+					if (Input.IsActionPressed("move_crouch")) {
+						velocity.X = direction.X * crouch_speed;
+						velocity.Z = direction.Z * crouch_speed;
+						if (charge_jump_enabled) {
+							charge_jump_stored_jump_vel += charge_jmp_charge_gain * (float)delta;
+						}
+					}
+					else{
+						charge_jump_stored_jump_vel = jump_vert_vel;
+						velocity.X = direction.X * move_speed;
+						velocity.Z = direction.Z * move_speed;
+					}
+				}
 			}
 		} else if (no_input && !IsOnFloor()) {//no input when airborne		
-			if (input_crouch && stomp_enabled) {
-				velocity.Y -= stomp_accel * (float)delta;
+			charge_jump_stored_jump_vel = jump_vert_vel;
+			if (Input.IsActionJustPressed("move_crouch") && stomp_enabled) {
 				stomp_active = true;
+			}
+			if (stomp_active) {
+				velocity.Y -= stomp_accel * (float)delta;
 			}
 			if (input_jmp && !initial_jmp_press) {
 				initial_jmp_press = true;
@@ -327,16 +376,12 @@ public partial class Player : CharacterBody3D, ITarget {
 			}
 			velocity = KillMomentumProportionalHelper(velocity, universal_deccel * delta);
 		} else if (any_input && !IsOnFloor()) {//input when airborne
-			if (input_crouch && stomp_enabled) {
-				velocity.Y -= stomp_accel * (float)delta;
+			charge_jump_stored_jump_vel = jump_vert_vel;
+			if (Input.IsActionJustPressed("move_crouch") && stomp_enabled) {
 				stomp_active = true;
 			}
-			if (input_crouch && stomp_enabled) {
+			if (stomp_active) {
 				velocity.Y -= stomp_accel * (float)delta;
-				stomp_active = true;
-			}
-			if (input_jmp && !initial_jmp_press) {
-				initial_jmp_press = true;
 			}
 			if (!input_jmp && initial_jmp_press) {
 				initial_jmp_release = true;
@@ -350,6 +395,7 @@ public partial class Player : CharacterBody3D, ITarget {
 				velocity = UniAccelDeccelHandler(velocity, inputs, direction, orientation, quarter_cirle_right_rotated_orientation, jump_hor_accel, universal_deccel, delta, move_speed);
 			}
 		}
+		GD.Print(charge_jump_stored_jump_vel);
 		Velocity = velocity;
 		MoveAndSlide();
 	}
