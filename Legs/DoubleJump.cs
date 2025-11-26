@@ -1,5 +1,3 @@
-using System;
-
 namespace Legs;
 
 public class DoubleJump : ILegAbility {

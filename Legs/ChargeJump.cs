@@ -6,11 +6,6 @@ public class ChargeJump : ILegAbility {
     private readonly float charge_gain = 4.0f;
 
     public void Apply(Player player, double delta, ref Vector3 velocity) {
-        var no_input = !(Input.IsActionPressed("move_forward")
-                        || Input.IsActionPressed("move_back")
-                        || Input.IsActionPressed("move_left")
-                        || Input.IsActionPressed("move_right"));
-
         if (stored_jump_vel < player.jump_vert_vel) {
             stored_jump_vel = player.jump_vert_vel;
         }
@@ -21,7 +16,7 @@ public class ChargeJump : ILegAbility {
             }
             velocity.Y = stored_jump_vel;
             stored_jump_vel = player.jump_vert_vel;
-        } else if (no_input && player.IsOnFloor() && Input.IsActionPressed("move_crouch")) {
+        } else if (player.IsOnFloor() && Input.IsActionPressed("move_crouch")) {
             stored_jump_vel += charge_gain * (float)delta;
         }
     }
