@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://cs601rh4fr6lk"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.986225, 0, 0)
+use_collision = true
+
+[node name="data center" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+size = Vector3(16, 64, 16)
+
+[node name="data center x entrance" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(32, 4, 4)
+
+[node name="data center z entrance" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(4, 4, 32)
+
+[node name="data center inside" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+operation = 2
+radius = 6.0
+height = 8.0
+
+[node name="data center floor z" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(24, 1, 48)
+
+[node name="data center floor x" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+size = Vector3(24, 1, 48)
+
+[node name="data center access slope team 1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.9238795, -0.38268346, 0, 0.38268346, 0.9238795, 0, 0, 0, 1, 27.627747, 1.4689298, 0)
+size = Vector3(8, 1, 6)
+
+[node name="data center access slope  team 2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.9238795, 0.38268346, -8.742278e-08, 0.38268346, 0.9238795, 0, 8.076811e-08, -3.345525e-08, -1, -27.573612, 1.4689298, 0)
+size = Vector3(8, 1, 6)
+
+[node name="team 1 main" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.44098, 2.9523344, 0.14347076)
+size = Vector3(2.8585205, 1, 59.962845)
+
+[node name="data center flank highground" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9255724, 2.9465265, -27.79064)
+size = Vector3(64, 1, 4)
+
+[node name="team 2 main" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.53369, 2.9523344, 0.14347076)
+size = Vector3(2.8585205, 1, 59.962845)
+
+[node name="data center cooling module" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 30.889)
+size = Vector3(25.507, 16, 18.664)
+
+[node name="data center cooling module floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8637037, 2.9465265, 28.051424)
+size = Vector3(64, 1, 4)
+
+[node name="data center cooling moduleentrance" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.436, 28.011)
+operation = 2
+size = Vector3(25.75293, 4, 4.185547)
+
+[node name="data center cooling module upper floor inside" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.432826, 32.011)
+operation = 2
+radius = 8.0
+height = 4.0
+
+[node name="data center cooling module staircase 1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.85355335, 0.3535534, -0.38268346, -0.38268346, 0.9238795, 0, 0.3535534, 0.14644663, 0.9238795, -2.4345365, 3.320786, 37.92926)
+operation = 2
+size = Vector3(5.785992, 2.136078, 2)
+
+[node name="data center cooling module staircase 2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.85355335, -0.3535534, 0.38268346, 0.38268346, 0.9238795, 0, -0.3535534, 0.14644663, 0.9238795, 2.4495153, 3.3204312, 37.918953)
+operation = 2
+size = Vector3(5.785992, 2.136078, 2)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 39.4905)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5332255, 39.056637)
+operation = 2
+radius = 0.9526367
+height = 2.4603271
+
+[node name="data center cooling module staircase 3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9238795, 0.38268346, 0, -0.38268346, 0.9238795, 0, 2.1420667, 36.90444)
+operation = 2
+size = Vector3(3, 2.3781025, 2.7574706)
+
+[node name="data center cooling module lower floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01099968, 1.9567904, 28.518074)
+operation = 2
+size = Vector3(2.965, 2.9121094, 15.159)
