@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://csdr2fk3caunx" path="res://Player.tscn" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://ceqy8rsnkb044" path="res://TargetDummy.tscn" id="2_uu6xs"]
-[ext_resource type="PackedScene" uid="uid://cs601rh4fr6lk" path="res://koth_1.tscn" id="3_r0du0"]
+[ext_resource type="PackedScene" uid="uid://crwj3fqb7qntx" path="res://koth_1.tscn" id="3_r0du0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_glv2v"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,7 +35,7 @@ mouse_filter = 2
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_glv2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.632959, 1.026165, 0)
-leg_type = 3
+leg_type = 1
 
 [node name="TargetDummy" parent="." instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.878809, 1.2524244, 3.7713456)
