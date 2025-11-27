@@ -41,4 +41,4 @@ leg_type = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.878809, 1.2524244, 3.7713456)
 
 [node name="Node3D" parent="." instance=ExtResource("3_r0du0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01809311, 0.08073425, -0.02315712)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06293869, 0.08073425, -0.40100098)
