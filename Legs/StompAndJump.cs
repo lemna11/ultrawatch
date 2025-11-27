@@ -8,6 +8,9 @@ public class StompAndJump : ILegAbility {
     private readonly float max_vel = 12.0f;
     private readonly float charge_gain = 4.0f;
 
+    public int MaxHealthModifier => 0;
+
+
     public void Apply(Player player, double delta, Vector3 direction, ref Vector3 velocity) {
 
         if (player.IsOnFloor()) {

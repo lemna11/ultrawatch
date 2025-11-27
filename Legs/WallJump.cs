@@ -4,6 +4,7 @@ public sealed class WallJump : ILegAbility {
     private readonly float normal_vel = 3.0f;
     private readonly float spd_bump = 4.0f;
     private readonly float stick_grvty = 24.0f;
+    public int MaxHealthModifier => 0;
 
     public void Apply(Player player, double delta, Vector3 direction, ref Vector3 velocity) {
         if (!player.IsOnFloor() && player.IsOnWall()) {
