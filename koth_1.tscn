@@ -27,72 +27,72 @@ radius = 6.0
 height = 8.0
 
 [node name="data center access slope team 1" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.9238795, -0.38268346, 0, 0.38268346, 0.9238795, 0, 0, 0, 1, 27.627747, 1.4689298, 0)
+transform = Transform3D(0.9238795, -0.38268346, 0, 0.38268346, 0.9238795, 0, 0, 0, 1, 20.51902, 1.4689298, 0)
 size = Vector3(8, 1, 6)
 
 [node name="data center access slope  team 2" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(-0.9238795, 0.38268346, -8.742278e-08, 0.38268346, 0.9238795, 0, 8.076811e-08, -3.345525e-08, -1, -27.573612, 1.4689298, 0)
+transform = Transform3D(-0.9238795, 0.38268346, -8.742278e-08, 0.38268346, 0.9238795, 0, 8.076811e-08, -3.345525e-08, -1, -20.51, 1.469, 0)
 size = Vector3(8, 1, 6)
 
 [node name="team 1 main" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.7646, 2.9523344, 3.131958)
-size = Vector3(5.505766, 1, 73.887054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.261147, 2.9523344, 3.0252495)
+size = Vector3(12.512672, 1, 64.53365)
 
 [node name="data center flank highground" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0031852722, 5.6328373, -29.793)
-size = Vector3(49.031372, 1, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06819725, 5.633, -25.09)
+size = Vector3(35.22529, 1, 8)
 
 [node name="team 2 main" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.87172, 2.9523344, 3.1494331)
-size = Vector3(5.6571045, 1, 73.85081)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.365173, 2.9523344, 3.04113)
+size = Vector3(12.670197, 1, 64.48689)
 
 [node name="data center cooling module" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 30.889)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 26)
 size = Vector3(25.507, 16, 18.664)
 
 [node name="data center cooling module floor" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8637037, 2.9465265, 30.814758)
-size = Vector3(64, 1, 18.530945)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8640003, 2.947, 26.22238)
+size = Vector3(64, 1, 18.151703)
 
 [node name="data center cooling moduleentrance" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.436, 28.011)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.436, 23.608)
 operation = 2
 size = Vector3(25.75293, 4, 4.185547)
 
 [node name="data center cooling module upper floor inside" type="CSGCylinder3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.432826, 32.011)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.433, 27.311)
 operation = 2
 radius = 8.0
 height = 4.0
 
 [node name="data center cooling module staircase 1" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.85355335, 0.3535534, -0.38268346, -0.38268346, 0.9238795, 0, 0.3535534, 0.14644663, 0.9238795, -2.4345365, 3.320786, 37.92926)
+transform = Transform3D(0.85355335, 0.3535534, -0.38268346, -0.38268346, 0.9238795, 0, 0.3535534, 0.14644663, 0.9238795, -2.435, 3.321, 33.229)
 operation = 2
 size = Vector3(5.785992, 2.136078, 2)
 
 [node name="data center cooling module staircase 2" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.85355335, -0.3535534, 0.38268346, 0.38268346, 0.9238795, 0, -0.3535534, 0.14644663, 0.9238795, 2.4495153, 3.3204312, 37.918953)
+transform = Transform3D(0.85355335, -0.3535534, 0.38268346, 0.38268346, 0.9238795, 0, -0.3535534, 0.14644663, 0.9238795, 2.45, 3.32, 33.229)
 operation = 2
 size = Vector3(5.785992, 2.136078, 2)
 
 [node name="data center staircase room brush" type="CSGCylinder3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5332255, 39.056637)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.533, 34.357)
 operation = 2
 radius = 0.9526367
 height = 2.4603271
 
 [node name="data center cooling module staircase 3" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 0.9238795, 0.38268346, 0, -0.38268346, 0.9238795, 0, 2.1420667, 36.90444)
+transform = Transform3D(1, 0, 0, 0, 0.9238795, 0.38268346, 0, -0.38268346, 0.9238795, 0, 2.142, 32.204)
 operation = 2
 size = Vector3(3, 2.3781025, 2.7574706)
 
 [node name="data center cooling module lower floor" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01099968, 1.9567904, 28.518074)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011, 1.957, 23.818)
 operation = 2
 size = Vector3(2.965, 2.9121094, 15.159)
 
 [node name="data center highground wall" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11994171, 17.082159, -42.023014)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 17.082, -37.5)
 size = Vector3(67.443, 30, 16.463379)
 
 [node name="data_center_entrance" type="CSGBox3D" parent="data center inside"]
@@ -157,31 +157,31 @@ radius = 23.660156
 
 [node name="data center point" type="CSGCylinder3D" parent="data center inside"]
 transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 0.0022821426, 0, 0)
-radius = 25.699707
+radius = 18.0
 height = 0.785
 
 [node name="data center cooling module entrance wall" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.920557, 5.7580576, 22.068388)
-size = Vector3(18.22293, 4.633301, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.91223, 5.758, 17.225752)
+size = Vector3(12.205391, 4.633301, 1)
 
 [node name="data center cooling module entrance wall2" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.894459, 5.7580576, 22.068388)
-size = Vector3(18.22293, 4.633301, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.888494, 5.758, 17.194557)
+size = Vector3(12.211922, 4.633301, 1)
 
 [node name="data center main wall to cooling module" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.540733, 5.262852, 16.010902)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.521027, 5.263, 12.170002)
 size = Vector3(1, 5.6260376, 11.0979)
 
 [node name="data center main wall to cooling module wall" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.541, 5.263, 16.011)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.51213, 5.263, 12.17)
 size = Vector3(1, 5.6260376, 11.0979)
 
 [node name="data center highground slope" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.9238795, 0.38268346, 0, -0.38268346, 0.9238795, 0, 0, 0, 1, 27.570133, 4.310136, -29.856617)
+transform = Transform3D(0.9238795, 0.38268346, 0, -0.38268346, 0.9238795, 0, 0, 0, 1, 20.617138, 4.31, -25.15)
 size = Vector3(7.0537415, 1, 8.118286)
 
 [node name="data center highground slope2" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.9238795, -0.38268346, 0, 0.38268346, 0.9238795, 0, 0, 0, 1, -27.57, 4.31, -29.857)
+transform = Transform3D(0.9238795, -0.38268346, 0, 0.38268346, 0.9238795, 0, 0, 0, 1, -20.750202, 4.31, -25.15)
 size = Vector3(7.0537415, 1, 8.118286)
 
 [node name="data center entrance left wall" type="CSGBox3D" parent="data center inside"]
@@ -241,20 +241,20 @@ transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.70710
 size = Vector3(1, 1.9874268, 5.0369644)
 
 [node name="main railing3" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.19848, 4.108, -27.018244)
-size = Vector3(1, 3.5, 13.487713)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.19848, 4.108, -24.737452)
+size = Vector3(1, 3.5, 8.926127)
 
 [node name="main railing4" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.19848, 4.108, 30.770836)
-size = Vector3(1, 3.5, 18.570883)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.19848, 4.108, 28.381462)
+size = Vector3(1, 3.5, 13.792135)
 
 [node name="main railing5" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.198, 4.108, 30.771)
-size = Vector3(1, 3.5, 18.570883)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.008427, 4.108, 28.38599)
+size = Vector3(1, 3.5, 13.800863)
 
 [node name="main railing6" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.198, 4.108, -27.018)
-size = Vector3(1, 3.5, 13.487713)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.043446, 4.108, -24.764404)
+size = Vector3(1, 3.5, 8.98052)
 
 [node name="spawn railing9" type="CSGBox3D" parent="data center inside"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 53.27451, 7.236, -18.843477)
@@ -272,39 +272,39 @@ size = Vector3(1, 1.9874268, 4.0701904)
 transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 55.12176, 7.231385, 15.654101)
 size = Vector3(1, 1.9874268, 6.0659943)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="data center inside"]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.3075447, 13.074307, -44.732975)
+[node name="highground flank hole" type="CSGCylinder3D" parent="data center inside"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.308, 13.074, -40.21)
 operation = 2
 radius = 5.0
 height = 103.01135
 
 [node name="CSGBox3D" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.388863, 8.015782, -44.268936)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.389, 8.016, -39.74)
 size = Vector3(7.4006424, 1, 7.072998)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.389, 8.016, -44.269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.389, 8.016, -39.74)
 size = Vector3(7.4006424, 1, 7.072998)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 11.342963, -40.88224)
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 11.343, -36.36)
 operation = 2
 size = Vector3(16, 6.436229, 16.441011)
 
 [node name="small bridge to blast hole3" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 63.025867, 6.25, -34.778576)
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 63.026, 6.25, -30.25)
 size = Vector3(4.3164883, 2, 29.155617)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.997564, 0.06975646, 0, -0.06975646, 0.997564, 0, 0, 0, 1, 48.346992, 7.0061407, -45.740532)
+transform = Transform3D(0.997564, 0.06975646, 0, -0.06975646, 0.997564, 0, 0, 0, 1, 48.347, 7.006, -41.22)
 size = Vector3(21.90725, 2, 6.628418)
 
 [node name="small bridge to blast hole4" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.9238795, 0, -0.38268346, 0, 1, 0, 0.38268346, 0, 0.9238795, -63.026, 6.25, -34.779)
+transform = Transform3D(0.9238795, 0, -0.38268346, 0, 1, 0, 0.38268346, 0, 0.9238795, -63.026, 6.25, -30.25)
 size = Vector3(4.3164883, 2, 29.155617)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="data center inside"]
-transform = Transform3D(0.997564, -0.06975646, 0, 0.06975646, 0.997564, 0, 0, 0, 1, -48.347, 7.006, -45.741)
+transform = Transform3D(0.997564, -0.06975646, 0, 0.06975646, 0.997564, 0, 0, 0, 1, -48.347, 7.006, -41.22)
 size = Vector3(21.90725, 2, 6.628418)
 
 [node name="data center building" type="CSGCombiner3D" parent="."]
@@ -337,20 +337,20 @@ radius = 12.0
 height = 22.083496
 
 [node name="data center inside hollow space" type="CSGSphere3D" parent="data center building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.903248, 16.204977, -0.19150543)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.947163, 16.277456, -0.12771797)
 operation = 2
 radius = 63.0
 radial_segments = 16
 rings = 8
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="data center building"]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 47.28244, 12.790701, -46.330383)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 47.772114, 12.791, -41.81)
 operation = 2
 radius = 4.0
-height = 25.035645
+height = 26.01587
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="data center building"]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -29.975859, 12.791, -46.33)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -29.976, 12.791, -41.81)
 operation = 2
 radius = 4.0
 height = 25.035645
