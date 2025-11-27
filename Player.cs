@@ -6,8 +6,7 @@ using static Utils.Util;
 
 public partial class Player : CharacterBody3D, ITarget {
     public enum LegType {
-        AirStomp,
-        ChargeJump,
+        StompAndHighJump,
         DoubleJump,
         HoverJet,
         WallJump
@@ -53,8 +52,7 @@ public partial class Player : CharacterBody3D, ITarget {
         Input.MouseMode = Input.MouseModeEnum.Captured;
         cur_health = max_health;
         current_legs = leg_type switch {
-            LegType.AirStomp => new AirStomp(),
-            LegType.ChargeJump => new ChargeJump(),
+            LegType.StompAndHighJump => new StompAndJump(),
             LegType.DoubleJump => new DoubleJump(),
             LegType.HoverJet => new HoverJet(),
             LegType.WallJump => new WallJump(),
