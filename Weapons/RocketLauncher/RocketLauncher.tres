@@ -6,6 +6,6 @@
 
 [resource]
 script = ExtResource("1_vh26j")
-right_arm_weapon_offset = Vector3(0.2, -0.2, -0.1)
+right_arm_weapon_offset = Vector3(0.15, -0.25, -0.25)
 weapon_model = ExtResource("2_3mkxw")
 shoot_sound = ExtResource("2_yltdt")
