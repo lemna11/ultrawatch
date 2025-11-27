@@ -5,7 +5,7 @@ public class ChargeJump : ILegAbility {
     private readonly float max_vel = 12.0f;
     private readonly float charge_gain = 4.0f;
 
-    public void Apply(Player player, double delta, ref Vector3 velocity) {
+    public void Apply(Player player, double delta, Vector3 direction, ref Vector3 velocity) {
         if (stored_jump_vel < player.jump_vert_vel) {
             stored_jump_vel = player.jump_vert_vel;
         }
