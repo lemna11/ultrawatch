@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://csdr2fk3caunx"]
+[gd_scene load_steps=6 format=3 uid="uid://csdr2fk3caunx"]
 
 [ext_resource type="Script" uid="uid://cqio3ym41ayu6" path="res://Player.cs" id="1_kne1u"]
 [ext_resource type="Script" uid="uid://casfm1d0g5bus" path="res://Weapons/WeaponManager.cs" id="2_e80uo"]
-[ext_resource type="Resource" uid="uid://dbc28sfdj5j6f" path="res://Weapons/RocketLauncher/RocketLauncher.tres" id="3_cxr5p"]
 [ext_resource type="PackedScene" uid="uid://c38gwiaon4v2u" path="res://UI/HUD.tscn" id="4_e80uo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cm0pq"]
@@ -38,7 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 script = ExtResource("2_e80uo")
 player = NodePath("..")
 weapon_holder = NodePath("../CameraYaw/CameraPitch/WeaponHolder")
-current_weapon = ExtResource("3_cxr5p")
 
 [node name="Hud" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_e80uo")]
 player = NodePath("..")
