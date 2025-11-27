@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://csdr2fk3caunx" path="res://Player.tscn" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://ceqy8rsnkb044" path="res://TargetDummy.tscn" id="2_uu6xs"]
-[ext_resource type="PackedScene" uid="uid://uh043pkvcaei" path="res://first_map_mesh_conv.tscn" id="3_r0du0"]
+[ext_resource type="PackedScene" uid="uid://crwj3fqb7qntx" path="res://koth_1.tscn" id="3_r0du0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_glv2v"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -41,3 +41,4 @@ leg_type = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.878809, 1.2524244, 3.7713456)
 
 [node name="Node3D" parent="." instance=ExtResource("3_r0du0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01809311, 0.08073425, -0.02315712)
