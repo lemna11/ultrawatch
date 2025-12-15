@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6w8f7x2v2w5d"]
+
+[ext_resource type="Script" path="res://Weapons/AutoPistol/AutoPistol.cs" id="1_abcde"]
+[ext_resource type="PackedScene" uid="uid://b8w2f8x2v2w5c" path="res://Weapons/AutoPistol/Projectile.tscn" id="2_fghij"]
+
+[node name="AutoPistol" type="Node3D"]
+script = ExtResource("1_abcde")
+projectile_scene = ExtResource("2_fghij")

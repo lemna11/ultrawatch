@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://d7w8f7x2v2w5e"]
+
+[ext_resource type="Script" path="res://Weapons/WeaponResource.cs" id="1_abcde"]
+[ext_resource type="PackedScene" uid="uid://c6w8f7x2v2w5d" path="res://Weapons/AutoPistol/AutoPistol.tscn" id="2_fghij"]
+
+[resource]
+script = ExtResource("1_abcde")
+damage = 3.33
+fire_rate = 10
+weapon_model = ExtResource("2_fghij")
