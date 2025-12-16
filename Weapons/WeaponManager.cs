@@ -109,6 +109,8 @@ public partial class WeaponManager : Node3D {
             UpdateWeaponModel("res://Weapons/AutoPistol/AutoPistol.tres");
         } else if (Input.IsKeyPressed(Key.Key5) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not HealGun) {
             UpdateWeaponModel("res://Weapons/HealGun/HealGun.tres");
+        } else if (Input.IsKeyPressed(Key.Key6) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not Sword) {
+            UpdateWeaponModel("res://Weapons/Sword/Sword.tres");
         }
     }
 
