@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://5xmhhxs61oo1"]
+
+[ext_resource type="Script" uid="uid://d241fwvb6knm0" path="res://Weapons/HealGun/HealGun.cs" id="1_heal_gun_script"]
+[ext_resource type="PackedScene" uid="uid://bp5yiq72g6sht" path="res://Weapons/HealGun/HealProjectile.tscn" id="2_heal_projectile_scene"]
+
+[node name="HealGun" type="Node3D"]
+script = ExtResource("1_heal_gun_script")
+projectileScene = ExtResource("2_heal_projectile_scene")
+
+[node name="HealGunSpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

@@ -131,8 +131,9 @@ public partial class Player : CharacterBody3D, ITarget {
         MoveAndSlide();
     }
 
-    public void TakeDamage(WeaponResource weapon) {
-        cur_health = 0 > cur_health - weapon.damage ? 0 : (int)(cur_health - weapon.damage);
+    public void TakeDamage(WeaponResource weapon, float damageAfterModifiers = 0) {
+        var damage = damageAfterModifiers != 0 ? damageAfterModifiers : weapon.damage;
+        cur_health = 0 > cur_health - damage ? 0 : (int)(cur_health - damage);
         update_hud();
     }
 }
