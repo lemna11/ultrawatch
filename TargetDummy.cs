@@ -7,13 +7,13 @@ public partial class TargetDummy : RigidBody3D, ITarget {
 
     private int _max_health;
 
-    public void TakeDamage(WeaponResource weapon) {
-        health -= (int)weapon.damage;
+    public void TakeDamage(WeaponResource weapon, float damageAfterModifiers = 0) {
+        var damage = damageAfterModifiers != 0 ? damageAfterModifiers : weapon.damage;
+        health -= (int)damage;
         health = Mathf.Clamp(health, 0, _max_health);
         label.Text = $"{health}/{_max_health}";
 
         if (health <= 0) {
-            // play death animation or effects here
             QueueFree();
         }
     }

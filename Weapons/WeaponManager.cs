@@ -107,6 +107,8 @@ public partial class WeaponManager : Node3D {
             UpdateWeaponModel("res://Weapons/GrapplingHook/GrapplingHook.tres", EquipSide.Left);
         } else if (Input.IsKeyPressed(Key.Key4) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not AutoPistol) {
             UpdateWeaponModel("res://Weapons/AutoPistol/AutoPistol.tres");
+        } else if (Input.IsKeyPressed(Key.Key5) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not HealGun) {
+            UpdateWeaponModel("res://Weapons/HealGun/HealGun.tres");
         }
     }
 

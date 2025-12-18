@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bp5yiq72g6sht"]
+
+[ext_resource type="Script" uid="uid://dq8x7m2v2o06e" path="res://Weapons/HealGun/HealProjectile.cs" id="1_heal_projectile_script"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_heal_projectile"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_heal_projectile_collision"]
+radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_heal_projectile_mat"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_heal_projectile_mesh"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_heal_projectile_area"]
+radius = 0.2
+
+[node name="HealProjectile" type="RigidBody3D" node_paths=PackedStringArray("_lifeTimer")]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_heal_projectile")
+gravity_scale = 0.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_heal_projectile_script")
+_lifeTimer = NodePath("Timer")
+_moveSpeed = 10.0
+_baseHealAmount = 15.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_heal_projectile_collision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_heal_projectile_mat")
+mesh = SubResource("SphereMesh_heal_projectile_mesh")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 50.0
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_heal_projectile_area")
