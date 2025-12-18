@@ -1,0 +1,103 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxc5s8wj6y8rm"]
+
+[ext_resource type="Script" path="res://UI/LoadoutSelectionMenu.cs" id="1_loadoutmenu"]
+
+[node name="LoadoutSelectionMenu" type="Control" node_paths=PackedStringArray("left_arm_container", "right_arm_container", "legs_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_loadoutmenu")
+left_arm_container = NodePath("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LeftArmColumn/WeaponsContainer")
+right_arm_container = NodePath("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/RightArmColumn/WeaponsContainer")
+legs_container = NodePath("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LegsColumn/LegsContainer")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Loadout Selection"
+horizontal_alignment = 1
+
+[node name="WeaponColumns" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="LeftArmColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LeftArmLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LeftArmColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Left Arm"
+horizontal_alignment = 1
+
+[node name="WeaponsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LeftArmColumn"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="RightArmColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RightArmLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/RightArmColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Right Arm"
+horizontal_alignment = 1
+
+[node name="WeaponsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/RightArmColumn"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="LegsColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LegsLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LegsColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Legs"
+horizontal_alignment = 1
+
+[node name="LegsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponColumns/LegsColumn"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HintLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press ESC to close"
+horizontal_alignment = 1

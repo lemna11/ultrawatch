@@ -34,4 +34,18 @@ public class StompAndJump : ILegAbility {
             }
         }
     }
+
+    public void Equip(Player player) {
+        player.max_health += MaxHealthModifier;
+        player.cur_health = player.max_health;
+        player.update_hud?.Invoke();
+        stomp_active = false;
+        stored_jump_vel = 0;
+    }
+
+    public void Unequip(Player player) {
+        player.max_health -= MaxHealthModifier;
+        player.cur_health = player.max_health;
+        player.update_hud?.Invoke();
+    }
 }
