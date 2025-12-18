@@ -47,12 +47,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
 radius = 2.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="power station inside/power pole platform"]
-transform = Transform3D(0.905332, 0.18419194, 0.3826834, -0.1993679, 0.9799247, 0, -0.37500092, -0.07629481, 0.9238793, -12.15647, -2.1292353, 5.0331)
-size = Vector3(21.972603, 9.960449, 3.057129)
+transform = Transform3D(0.905332, 0.18419194, 0.3826834, -0.1993679, 0.9799247, 0, -0.37500092, -0.07629481, 0.9238793, -12.566947, -2.1292353, 4.042122)
+size = Vector3(21.972603, 9.960449, 5.2023926)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="power station inside/power pole platform"]
-transform = Transform3D(0.9238795, 0.09581626, 0.37049386, 0, 0.96814764, -0.25037986, -0.38268346, 0.23132092, 0.89445126, -4.590317, -2.4171295, -11.041569)
-size = Vector3(3.0625, 10.769531, 17.599487)
+transform = Transform3D(0.9238795, 0.09581626, 0.37049386, 0, 0.96814764, -0.25037986, -0.38268346, 0.23132092, 0.89445126, -4.4052315, -2.6716585, -10.052935)
+size = Vector3(7.312866, 10.769531, 19.63263)
 
 [node name="power pole platform2" type="CSGCylinder3D" parent="power station inside"]
 transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, -24, -4, 24)
@@ -91,29 +91,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
 radius = 2.0
 
 [node name="main" type="CSGBox3D" parent="power station inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.04158, -1.9999998, -0.0004067421)
-size = Vector3(12.176758, 1, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.497696, -2.6910093, -0.0004067421)
+size = Vector3(13.26477, 3.5564575, 6)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 0, 0, 1, -7.6563587, 1.2928207, 0)
-size = Vector3(4.5007324, 1, 4)
+transform = Transform3D(0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 0, 0, 1, -8.438061, -0.15771675, 0)
+size = Vector3(4.996105, 6.1196823, 6)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.425056, 0, 9.204132)
-size = Vector3(2.8665771, 1, 9.494629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.522057, 0.6268921, 9.204132)
+size = Vector3(4.0481873, 2.2537842, 9.494629)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.7071067, -0.09841024, -0.7002252, 0, 0.99026805, -0.13917309, 0.7071067, 0.09841024, 0.7002252, 6.434332, -0.75446343, 17.527565)
-size = Vector3(3.04187, 1, 10.88739)
+transform = Transform3D(0.7071067, -0.14701575, -0.69165474, 0, 0.97814757, -0.20791167, 0.7071067, 0.14701575, 0.69165474, 5.9605026, -0.4017017, 17.178946)
+size = Vector3(5.593048, 2.2723389, 10.88739)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.088043, 0, 14.199696)
-size = Vector3(1.4873047, 1, 1.3414307)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.892487, 0.62506104, 14.2871895)
+size = Vector3(1.878418, 2.250122, 1.5164185)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="power station inside/main"]
-transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 10.49633, 0, 0)
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 10.49633, 0.0075683594, 0)
 radius = 5.176758
-height = 1.0
+height = 3.5083008
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -2.1971188, 3.7165527, -11.044693)
+size = Vector3(1, 8.433105, 21.637177)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.501461, 0.63720703, -9.74103)
+size = Vector3(3.964386, 2.274414, 11.463623)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 9.487591, 0.63861084, -16.49464)
+size = Vector3(5.6464233, 2.2772217, 2.7699585)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="power station inside"]
 
