@@ -151,27 +151,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.501461, 0.63720703, -9.741
 size = Vector3(3.964386, 2.274414, 11.463623)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 10.050171, 0.63861084, -15.042196)
-size = Vector3(2.7967453, 2.2772217, 4.028412)
-
-[node name="CSGBox3D8" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.7071067, -0.14701577, 0.69165474, 0, 0.9781476, 0.20791169, -0.7071067, -0.14701577, 0.69165474, 3.92037, -0.52936745, -16.897902)
-size = Vector3(2.2106934, 1.9849701, 11.831879)
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 8.060415, 0.633728, -17.089724)
-size = Vector3(3.9058151, 2.267456, 3.0704956)
-material = ExtResource("1_lm7v7")
-
-[node name="Area3D" type="Area3D" parent="power station inside/main/CSGBox3D9"]
-transform = Transform3D(0, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 0, -0.040851593, 0.0048828125, 2.7806616)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("1_w3frt")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="power station inside/main/CSGBox3D9/Area3D"]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -2.820592, 1.3101807, -0.05854416)
-shape = SubResource("BoxShape3D_w3frt")
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 9.487591, 0.63861084, -16.49464)
+size = Vector3(5.6464233, 2.2772217, 2.7699585)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="power station inside"]
 
