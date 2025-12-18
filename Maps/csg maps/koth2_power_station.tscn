@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://beycd1cquv30n"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="powerplant, spheres" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="powerplant, spheres"]
+radius = 65.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="powerplant, spheres/CSGSphere3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 54.109737, 0)
+operation = 2
+size = Vector3(130, 65, 130)
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="powerplant, spheres"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01241684, -4.7683716e-07, -0.011777878)
+operation = 2
+radius = 64.0
+
+[node name="power station inside" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="point platform" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 0, -4.343384, 0)
+radius = 16.0
+height = 10.686768
+
+[node name="power pole" type="CSGCylinder3D" parent="power station inside/point platform"]
+transform = Transform3D(0.9238795, 0, -0.38268346, 0, 1, 0, 0.38268346, 0, 0.9238795, 0, 12, 0)
+height = 24.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="power station inside/point platform/power pole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
+radius = 2.0
+
+[node name="power pole platform" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 24, -4, 24)
+radius = 4.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="power station inside/power pole platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+height = 24.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="power station inside/power pole platform/CSGCylinder3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
+radius = 2.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="power station inside/power pole platform"]
+transform = Transform3D(0.905332, 0.18419194, 0.3826834, -0.1993679, 0.9799247, 0, -0.37500092, -0.07629481, 0.9238793, -12.15647, -2.1292353, 5.0331)
+size = Vector3(21.972603, 9.960449, 3.057129)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="power station inside/power pole platform"]
+transform = Transform3D(0.9238795, 0.09581626, 0.37049386, 0, 0.96814764, -0.25037986, -0.38268346, 0.23132092, 0.89445126, -4.590317, -2.4171295, -11.041569)
+size = Vector3(3.0625, 10.769531, 17.599487)
+
+[node name="power pole platform2" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, -24, -4, 24)
+radius = 4.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="power station inside/power pole platform2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+height = 24.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="power station inside/power pole platform2/CSGCylinder3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
+radius = 2.0
+
+[node name="power pole platform3" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 24, -4, -24)
+radius = 4.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="power station inside/power pole platform3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+height = 24.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="power station inside/power pole platform3/CSGCylinder3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
+radius = 2.0
+
+[node name="power pole platform4" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, -24, -4, -24)
+radius = 4.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="power station inside/power pole platform4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+height = 24.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="power station inside/power pole platform4/CSGCylinder3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.776722, 0)
+radius = 2.0
+
+[node name="main" type="CSGBox3D" parent="power station inside"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.04158, -1.9999998, -0.0004067421)
+size = Vector3(12.176758, 1, 4)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 0, 0, 1, -7.6563587, 1.2928207, 0)
+size = Vector3(4.5007324, 1, 4)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.425056, 0, 9.204132)
+size = Vector3(2.8665771, 1, 9.494629)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.7071067, -0.09841024, -0.7002252, 0, 0.99026805, -0.13917309, 0.7071067, 0.09841024, 0.7002252, 6.434332, -0.75446343, 17.527565)
+size = Vector3(3.04187, 1, 10.88739)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.088043, 0, 14.199696)
+size = Vector3(1.4873047, 1, 1.3414307)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="power station inside/main"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 10.49633, 0, 0)
+radius = 5.176758
+height = 1.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="power station inside"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="power station inside"]
+transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 0, -6.275635, 39.428486)
+radius = 9.616211
+height = 14.55127
