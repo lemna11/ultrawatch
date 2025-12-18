@@ -21,4 +21,17 @@ public class DoubleJump : ILegAbility {
             }
         }
     }
+
+    public void Equip(Player player) {
+        player.max_health += MaxHealthModifier;
+        player.cur_health = player.max_health;
+        player.update_hud?.Invoke();
+        jump_used = false;
+    }
+
+    public void Unequip(Player player) {
+        player.max_health -= MaxHealthModifier;
+        player.cur_health = player.max_health;
+        player.update_hud?.Invoke();
+    }
 }

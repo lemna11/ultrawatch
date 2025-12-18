@@ -1,18 +1,10 @@
-using System.ComponentModel;
-
 using Legs;
+
+using UI;
 
 using static Utils.Util;
 
 public partial class Player : CharacterBody3D, ITarget {
-    public enum LegType {
-        Default,
-        StompAndHighJump,
-        DoubleJump,
-        HoverJet,
-        WallJump
-    }
-
     [Export]
     public Node3D camera_yaw;
 
@@ -41,7 +33,8 @@ public partial class Player : CharacterBody3D, ITarget {
     public int max_health = 100;
 
     [Export]
-    public LegType leg_type;
+    public Control weapon_selection_menu;
+    private LoadoutSelectionMenu _weaponSelectionMenuInstance;
 
     public int cur_health;
 
@@ -51,17 +44,42 @@ public partial class Player : CharacterBody3D, ITarget {
 
     public override void _Ready() {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        current_legs = leg_type switch {
-            LegType.Default => new DefaultLegs(),
-            LegType.StompAndHighJump => new StompAndJump(),
-            LegType.DoubleJump => new DoubleJump(),
-            LegType.HoverJet => new HoverJet(),
-            LegType.WallJump => new WallJump(),
-            _ => throw new InvalidEnumArgumentException()
-        };
-        max_health += current_legs.MaxHealthModifier;
-        cur_health = max_health;
+        if (weapon_selection_menu as LoadoutSelectionMenu is null) throw new ArgumentNullException("weapon_selection_menu must be of type LoadoutSelectionMenu");
+
+        ChangeLegAbility(new DefaultLegs());
         update_hud();
+
+        var weaponManager = GetNode<WeaponManager>("WeaponManager");
+        _weaponSelectionMenuInstance = weapon_selection_menu as LoadoutSelectionMenu;
+        _weaponSelectionMenuInstance.OnWeaponSelected += weaponManager.ChangeWeapon;
+        _weaponSelectionMenuInstance.OnLegSelected += OnLegSelected;
+    }
+
+    public override void _ExitTree() {
+        if (_weaponSelectionMenuInstance is not null) {
+            _weaponSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
+            _weaponSelectionMenuInstance.OnLegSelected -= OnLegSelected;
+        }
+    }
+
+    public void ChangeLegAbility(ILegAbility newLegs) {
+        if (newLegs == null) return;
+        current_legs?.Unequip(this);
+        current_legs = newLegs;
+        current_legs.Equip(this);
+    }
+
+    private void OnLegSelected(string legClassName) {
+        ILegAbility newLegs = legClassName switch {
+            "DefaultLegs" => new DefaultLegs(),
+            "StompAndJump" => new StompAndJump(),
+            "DoubleJump" => new DoubleJump(),
+            "HoverJet" => new HoverJet(),
+            "WallJump" => new WallJump(),
+            _ => throw new ArgumentException("Invalid leg class name")
+        };
+
+        ChangeLegAbility(newLegs);
     }
 
     public override void _Process(double delta) {
@@ -83,13 +101,8 @@ public partial class Player : CharacterBody3D, ITarget {
                 camera_pitch.RotationDegrees.Y,
                 camera_pitch.RotationDegrees.Z
             );
-        }
-        // quick hack to toggle mouse capture
-        else if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape) {
-            if (Input.MouseMode == Input.MouseModeEnum.Captured)
-                Input.MouseMode = Input.MouseModeEnum.Visible;
-            else
-                Input.MouseMode = Input.MouseModeEnum.Captured;
+        } else if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape) {
+            weapon_selection_menu?.Call("ToggleMenu");
         } else
             base._Input(@event);
     }
