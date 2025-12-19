@@ -56,6 +56,10 @@ script = ExtResource("1_w3frt")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="power station inside/point platform/CSGBox3D/Area3D"]
 shape = SubResource("BoxShape3D_lm7v7")
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="power station inside/point platform"]
+transform = Transform3D(0.9238795, 0, -0.38268346, 0, 1, 0, 0.38268346, 0, 0.9238795, -5.561108, 8.037549, 13.452556)
+size = Vector3(12.24379, 5.489624, 0.45166016)
+
 [node name="power pole platform" type="CSGCylinder3D" parent="power station inside"]
 transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 24, -4, 24)
 radius = 4.0
