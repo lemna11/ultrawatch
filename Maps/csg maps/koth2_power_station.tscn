@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://beycd1cquv30n"]
+[gd_scene load_steps=6 format=3 uid="uid://beycd1cquv30n"]
 
 [ext_resource type="Material" uid="uid://bnu1ism6531bx" path="res://Maps/csg maps/koth2_power_station_jump_pad.tres" id="1_lm7v7"]
-[ext_resource type="Script" uid="uid://cuuu2nu583hdm" path="res://Maps/map scripts/JumpPad.cs" id="1_w3frt"]
+[ext_resource type="Script" uid="uid://cuuu2nu583hdm" path="res://Maps/map scripts/JumpPad.cs" id="2_lm7v7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lm7v7"]
 size = Vector3(4, 2, 4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w3frt"]
 size = Vector3(3.0039368, 0.52563477, 3.9305115)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ianbs"]
+size = Vector3(4, 2, 16)
 
 [node name="Node3D" type="Node3D"]
 
@@ -51,7 +54,8 @@ material = ExtResource("1_lm7v7")
 [node name="Area3D" type="Area3D" parent="power station inside/point platform/CSGBox3D"]
 collision_layer = 3
 collision_mask = 3
-script = ExtResource("1_w3frt")
+script = ExtResource("2_lm7v7")
+launch_velocity = Vector3(0, 12, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="power station inside/point platform/CSGBox3D/Area3D"]
 shape = SubResource("BoxShape3D_lm7v7")
@@ -147,16 +151,36 @@ radius = 5.176758
 height = 3.5083008
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -2.1971188, 3.7165527, -11.044693)
-size = Vector3(1, 8.433105, 21.637177)
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -2.1971188, 4.35437, -11.044693)
+size = Vector3(1, 9.70874, 21.637177)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="power station inside/main"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.501461, 0.63720703, -9.74103)
 size = Vector3(3.964386, 2.274414, 11.463623)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="power station inside/main"]
-transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 9.487591, 0.63861084, -16.49464)
-size = Vector3(5.6464233, 2.2772217, 2.7699585)
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 10.050171, 0.63861084, -15.042196)
+size = Vector3(2.7967453, 2.2772217, 4.028412)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.7071067, -0.14701577, 0.69165474, 0, 0.9781476, 0.20791169, -0.7071067, -0.14701577, 0.69165474, 3.92037, -0.52936745, -16.897902)
+size = Vector3(2.2106934, 1.9849701, 11.831879)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="power station inside/main"]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 8.060415, 0.633728, -17.089724)
+size = Vector3(3.9058151, 2.267456, 3.0704956)
+material = ExtResource("1_lm7v7")
+
+[node name="Area3D" type="Area3D" parent="power station inside/main/CSGBox3D9"]
+transform = Transform3D(0, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 0, -0.040851593, 0.0048828125, 2.7806616)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_lm7v7")
+launch_velocity = Vector3(0, 12, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="power station inside/main/CSGBox3D9/Area3D"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -2.820592, 1.3101807, -0.05854416)
+shape = SubResource("BoxShape3D_w3frt")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="power station inside"]
 
@@ -193,3 +217,24 @@ size = Vector3(20.472649, 1.9936218, 3.135498)
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="power station inside/power pole platform4"]
 transform = Transform3D(0.92387986, -0.3826836, 1.6727629e-08, 0, -4.371139e-08, -1, 0.3826836, 0.92387986, -4.0384066e-08, -21.85952, 0, -10.642731)
 polygon = PackedVector2Array(10, 0, 0, 0, 0, -10)
+
+[node name="powerplant outside" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="powerplant outside"]
+size = Vector3(4, 1, 16)
+material = ExtResource("1_lm7v7")
+
+[node name="Area3D" type="Area3D" parent="powerplant outside/CSGBox3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_lm7v7")
+launch_velocity = Vector3(-40, 30, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="powerplant outside/CSGBox3D/Area3D"]
+shape = SubResource("BoxShape3D_ianbs")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="powerplant outside"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+size = Vector3(16, 1, 16)
