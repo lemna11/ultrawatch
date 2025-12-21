@@ -1,9 +1,8 @@
 namespace Maps;
 
-public partial class JumpPad : Area3D
-{
+public partial class JumpPad : Area3D {
 	[Export]
-	public Vector3 launch_velocity = new Vector3(0, 12, 0);
+	public Vector3 launch_velocity = new Vector3(0, 10, 0);
 
 	public override void _Ready() {
 		BodyEntered += OnBodyEntered;
