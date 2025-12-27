@@ -7,6 +7,7 @@ public partial class Sword : Node3D, IWeapon {
     [Export]
     public Area3D Hitbox;
 
+    private bool _usedMidair = false;
     private WeaponResource _currentWeapon;
     private Player _ownerPlayer;
     private readonly HashSet<ITarget> _hitTargets = [];
@@ -18,7 +19,14 @@ public partial class Sword : Node3D, IWeapon {
         }
     }
 
+    public override void _Process(double delta) {
+        if (_ownerPlayer != null && _ownerPlayer.IsOnFloor()) {
+            _usedMidair = false;
+        }
+    }
+
     public void Shoot(WeaponResource weapon, Player player) {
+        if (_usedMidair && !player.IsOnFloor() && player == _ownerPlayer) return;
         _currentWeapon = weapon;
         _ownerPlayer = player;
 
@@ -26,6 +34,10 @@ public partial class Sword : Node3D, IWeapon {
         if (camera != null) {
             Vector3 forward = -camera.GlobalTransform.Basis.Z;
             player.Velocity = forward * YankStrength;
+        }
+
+        if (!player.IsOnFloor()) {
+            _usedMidair = true;
         }
 
         if (Hitbox != null) {
