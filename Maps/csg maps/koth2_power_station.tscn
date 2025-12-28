@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://beycd1cquv30n"]
+[gd_scene load_steps=9 format=3 uid="uid://beycd1cquv30n"]
 
+[ext_resource type="Script" uid="uid://cv7l32j8afxdw" path="res://Maps/csg maps/Koth2PowerStation.cs" id="1_ianbs"]
 [ext_resource type="Material" uid="uid://bnu1ism6531bx" path="res://Maps/csg maps/koth2_power_station_jump_pad.tres" id="1_lm7v7"]
 [ext_resource type="Script" uid="uid://cuuu2nu583hdm" path="res://Maps/map scripts/JumpPad.cs" id="2_lm7v7"]
 
@@ -19,7 +20,11 @@ size = Vector3(4, 2, 16)
 [sub_resource type="BoxShape3D" id="BoxShape3D_15h74"]
 size = Vector3(8.873779, 13.051636, 32.079636)
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("team_d_spawn", "team_b_spawn", "koth_point")]
+script = ExtResource("1_ianbs")
+team_d_spawn = NodePath("powerplant outside2/spawn")
+team_b_spawn = NodePath("powerplant outside/spawn")
+koth_point = NodePath("power station inside/point")
 
 [node name="powerplant, spheres" type="CSGCombiner3D" parent="."]
 use_collision = true
