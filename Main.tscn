@@ -37,7 +37,7 @@ mouse_filter = 2
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_glv2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.557495, 1.026165, 0)
-leg_type = 2
+leg_type = 3
 
 [node name="TargetDummy" parent="." instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.878809, 1.2524244, 3.7713456)
