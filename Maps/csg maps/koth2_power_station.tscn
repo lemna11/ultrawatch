@@ -356,7 +356,7 @@ material = ExtResource("1_lm7v7")
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_lm7v7")
-launch_velocity = Vector3(-40, 30, 0)
+launch_velocity = Vector3(40, 30, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="powerplant outside2/CSGBox3D/Area3D"]
 shape = SubResource("BoxShape3D_ianbs")
