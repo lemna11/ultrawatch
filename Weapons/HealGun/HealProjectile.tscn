@@ -26,8 +26,9 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_heal_projectile_script")
 _lifeTimer = NodePath("Timer")
-_moveSpeed = 10.0
-_baseHealAmount = 15.0
+_moveSpeed = 75.0
+_baseHealAmount = 25.0
+_healRampUpPerSecond = 37.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_heal_projectile_collision")
