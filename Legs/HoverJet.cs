@@ -14,16 +14,4 @@ public class HoverJet : ILegAbility {
         }
         velocity = UniAccelDeccelHandler(velocity, direction, player.universal_accel, player.universal_deccel, delta, move_speed);
     }
-
-    public void Equip(Player player) {
-        player.max_health += MaxHealthModifier;
-        player.cur_health = player.max_health;
-        player.update_hud?.Invoke();
-    }
-
-    public void Unequip(Player player) {
-        player.max_health -= MaxHealthModifier;
-        player.cur_health = player.max_health;
-        player.update_hud?.Invoke();
-    }
 }

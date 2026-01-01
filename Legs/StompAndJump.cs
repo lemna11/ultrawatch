@@ -12,7 +12,6 @@ public class StompAndJump : ILegAbility {
 
 
     public void Apply(Player player, double delta, Vector3 direction, ref Vector3 velocity) {
-
         if (player.IsOnFloor()) {
             stomp_active = false;
             if (Input.IsActionPressed("move_jump")) {
@@ -41,11 +40,5 @@ public class StompAndJump : ILegAbility {
         player.update_hud?.Invoke();
         stomp_active = false;
         stored_jump_vel = 0;
-    }
-
-    public void Unequip(Player player) {
-        player.max_health -= MaxHealthModifier;
-        player.cur_health = player.max_health;
-        player.update_hud?.Invoke();
     }
 }
