@@ -42,6 +42,8 @@ public partial class Player : CharacterBody3D, ITarget {
 
     private ILegAbility current_legs;
 
+    private string current_body = string.Empty;
+
     public override void _Ready() {
         Input.MouseMode = Input.MouseModeEnum.Captured;
         if (weapon_selection_menu as LoadoutSelectionMenu is null) throw new ArgumentNullException("weapon_selection_menu must be of type LoadoutSelectionMenu");
@@ -53,12 +55,14 @@ public partial class Player : CharacterBody3D, ITarget {
         _weaponSelectionMenuInstance = weapon_selection_menu as LoadoutSelectionMenu;
         _weaponSelectionMenuInstance.OnWeaponSelected += weaponManager.ChangeWeapon;
         _weaponSelectionMenuInstance.OnLegSelected += OnLegSelected;
+        _weaponSelectionMenuInstance.OnBodySelected += OnBodySelected;
     }
 
     public override void _ExitTree() {
         if (_weaponSelectionMenuInstance is not null) {
             _weaponSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
             _weaponSelectionMenuInstance.OnLegSelected -= OnLegSelected;
+            _weaponSelectionMenuInstance.OnBodySelected += OnBodySelected;
         }
     }
 
@@ -80,6 +84,39 @@ public partial class Player : CharacterBody3D, ITarget {
         };
 
         ChangeLegAbility(newLegs);
+    }
+
+    private void OnBodySelected(string bodyName) {
+        switch (current_body) {
+            case "Light":
+                max_health -= 25;
+                break;
+            case "Medium":
+                max_health -= 75;
+                break;
+            case "Heavy":
+                max_health -= 150;
+                break;
+            default: break;
+        }
+
+        current_body = bodyName;
+
+        switch (bodyName) {
+            case "Light":
+                max_health += 25;
+                break;
+            case "Medium":
+                max_health += 75;
+                break;
+            case "Heavy":
+                max_health += 150;
+                break;
+            default: break;
+        }
+
+        cur_health = max_health;
+        update_hud();
     }
 
     public override void _Process(double delta) {
