@@ -1,18 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://csdr2fk3caunx"]
+[gd_scene load_steps=7 format=3 uid="uid://csdr2fk3caunx"]
 
 [ext_resource type="Script" uid="uid://cqio3ym41ayu6" path="res://Player.cs" id="1_kne1u"]
 [ext_resource type="Script" uid="uid://casfm1d0g5bus" path="res://Weapons/WeaponManager.cs" id="2_e80uo"]
 [ext_resource type="PackedScene" uid="uid://c38gwiaon4v2u" path="res://UI/HUD.tscn" id="4_e80uo"]
+[ext_resource type="PackedScene" uid="uid://dxc5s8wj6y8rm" path="res://UI/LoadoutSelectionMenu.tscn" id="5_loadoutmenu"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cm0pq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fos0i"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera_yaw", "camera_pitch")]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera_yaw", "camera_pitch", "weapon_selection_menu")]
 collision_layer = 2
 script = ExtResource("1_kne1u")
 camera_yaw = NodePath("CameraYaw")
 camera_pitch = NodePath("CameraYaw/CameraPitch")
+weapon_selection_menu = NodePath("LoadoutSelectionMenu")
 jump_velocity = 100.0
 mouse_sensitivity = 0.7
 
@@ -41,6 +43,8 @@ weapon_holder = NodePath("../CameraYaw/CameraPitch/WeaponHolder")
 [node name="Hud" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_e80uo")]
 player = NodePath("..")
 metadata/_edit_use_anchors_ = true
+
+[node name="LoadoutSelectionMenu" parent="." instance=ExtResource("5_loadoutmenu")]
 
 [node name="Center" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

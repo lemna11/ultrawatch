@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://uh043pkvcaei"]
+
+[ext_resource type="PackedScene" uid="uid://duypxmdv4nxpw" path="res://Maps/map_meshes/data_center/meshdata_center_building.tscn" id="1_m78o0"]
+[ext_resource type="PackedScene" uid="uid://bn0jpjxe1nsc3" path="res://Maps/map_meshes/data_center/meshdata_center_inside.tscn" id="2_c8pbv"]
+[ext_resource type="PackedScene" uid="uid://dog413nn42m3g" path="res://Maps/map_meshes/data_center/building_collisions.tscn" id="2_jth7b"]
+[ext_resource type="PackedScene" uid="uid://clpopuqf7mmug" path="res://Maps/map_meshes/data_center/inside_collisions.tscn" id="4_n463n"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Meshdata center building" parent="." instance=ExtResource("1_m78o0")]
+
+[node name="Area3D" type="Area3D" parent="Meshdata center building"]
+
+[node name="CSGBakedCollisionShape3D2" parent="Meshdata center building/Area3D" instance=ExtResource("2_jth7b")]
+
+[node name="Meshdata center inside" parent="." instance=ExtResource("2_c8pbv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.986, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="Meshdata center inside"]
+
+[node name="CSGBakedCollisionShape3D" parent="Meshdata center inside/Area3D" instance=ExtResource("4_n463n")]

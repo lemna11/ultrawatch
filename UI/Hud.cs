@@ -1,3 +1,5 @@
+namespace UI;
+
 public partial class Hud : Control {
     [Export]
     public Player player;
