@@ -1,5 +1,5 @@
 public partial class WeaponManager : Node3D {
-    private enum EquipSide {
+    public enum EquipSide {
         Right,
         Left
     }
@@ -98,30 +98,35 @@ public partial class WeaponManager : Node3D {
             PlayAnimation(_current_left_weapon_instance, left_current_weapon.shoot_animation);
             PlaySound(_current_left_weapon_instance, left_current_weapon.shoot_sound);
         }
+    }
 
-        if (Input.IsKeyPressed(Key.Key1) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not Shotgun) {
-            UpdateWeaponModel("res://Weapons/Shotgun/Shotgun.tres");
-        } else if (Input.IsKeyPressed(Key.Key2) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not RocketLauncher) {
-            UpdateWeaponModel("res://Weapons/RocketLauncher/RocketLauncher.tres");
-        } else if (Input.IsKeyPressed(Key.Key3) && right_current_weapon?.can_fire is true or null && _current_left_weapon_instance is not GrapplingHook) {
-            UpdateWeaponModel("res://Weapons/GrapplingHook/GrapplingHook.tres", EquipSide.Left);
-        } else if (Input.IsKeyPressed(Key.Key5) && right_current_weapon?.can_fire is true or null && _current_right_weapon_instance is not HealGun) {
-            UpdateWeaponModel("res://Weapons/HealGun/HealGun.tres");
+    public void ChangeWeapon(string weaponPath, EquipSide side) {
+        if (weaponPath is null or "") return;
+        if (side == EquipSide.Right && right_current_weapon is not null && right_current_weapon.timer is not null) {
+            right_current_weapon.timer.QueueFree();
+            right_current_weapon.timer = null;
+            return;
         }
+        if (side == EquipSide.Left && left_current_weapon is not null && left_current_weapon.timer is not null) {
+            left_current_weapon.timer.QueueFree();
+            left_current_weapon.timer = null;
+            return;
+        }
+        UpdateWeaponModel(weaponPath, side);
     }
 
     public override void _Ready() {
         UpdateWeaponModel();
     }
 
-    private void PlayAnimation(Node3D _current_weapon_instance, string animationName) {
+    private static void PlayAnimation(Node3D _current_weapon_instance, string animationName) {
         if (_current_weapon_instance is null || animationName is null or "" || !_current_weapon_instance.HasNode("AnimationPlayer")) return;
         var animationPlayer = _current_weapon_instance.GetNode<AnimationPlayer>("AnimationPlayer");
         if (!animationPlayer.HasAnimation(animationName)) return;
         animationPlayer.Queue(animationName);
     }
 
-    private void PlaySound(Node3D _current_weapon_instance, AudioStream sound) {
+    private static void PlaySound(Node3D _current_weapon_instance, AudioStream sound) {
         if (_current_weapon_instance is null || sound is null || !_current_weapon_instance.HasNode("AudioStreamPlayer3D")) return;
         var soundPlayer = _current_weapon_instance.GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D");
         soundPlayer.Stream = sound;
@@ -138,7 +143,7 @@ public partial class WeaponManager : Node3D {
         };
         current_weapon.timer.Timeout += () => {
             current_weapon.can_fire = true;
-            current_weapon.timer.QueueFree();
+            current_weapon.timer?.QueueFree();
             current_weapon.timer = null;
         };
         AddChild(current_weapon.timer);
