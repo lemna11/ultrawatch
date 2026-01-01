@@ -85,7 +85,8 @@ public partial class WeaponManager : Node3D {
         }
     }
 
-    public override void _Process(double delta) {
+    public override void _UnhandledInput(InputEvent @event) {
+        base._UnhandledInput(@event);
         if (Input.IsActionPressed("fire") && right_current_weapon is { can_fire: true } && _current_right_weapon_instance is not null) {
             (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
             ShootAgainIn(right_current_weapon, 1.0f / right_current_weapon.fire_rate);
