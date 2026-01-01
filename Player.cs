@@ -86,6 +86,8 @@ public partial class Player : CharacterBody3D, ITarget {
         ChangeLegAbility(newLegs);
     }
 
+    // all of these values will end up in resource files to be configurable via
+    // the godot editor in the future
     private void OnBodySelected(string bodyName) {
         switch (current_body) {
             case "Light":
@@ -104,12 +106,18 @@ public partial class Player : CharacterBody3D, ITarget {
 
         switch (bodyName) {
             case "Light":
+                move_speed = 9.0f;
+                crouch_speed = 4.5f;
                 max_health += 25;
                 break;
             case "Medium":
+                move_speed = 6.0f;
+                crouch_speed = 3.0f;
                 max_health += 75;
                 break;
             case "Heavy":
+                move_speed = 4.5f;
+                crouch_speed = 2.25f;
                 max_health += 150;
                 break;
             default: break;
