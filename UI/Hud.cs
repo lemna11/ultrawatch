@@ -30,6 +30,9 @@ public partial class Hud : Control {
     public override void _Ready() {
         player.update_hud += OnPlayerHudUpdateRequested;
         weapon_manager.update_hud += OnWeaponHudUpdateRequested;
+
+        OnPlayerHudUpdateRequested();
+        OnWeaponHudUpdateRequested();
     }
 
     public override void _ExitTree() {
