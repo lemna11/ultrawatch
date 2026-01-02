@@ -10,3 +10,4 @@ fire_rate = 0.666
 right_arm_weapon_offset = Vector3(0.8, -0.5, -1)
 left_arm_weapon_offset = Vector3(-0.8, -0.5, -1)
 weapon_model = ExtResource("2_scene")
+fireMode = 1
