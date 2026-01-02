@@ -1,3 +1,5 @@
+using Weapons;
+
 public partial class TargetDummy : RigidBody3D, ITarget {
     [Export]
     public Label3D label;

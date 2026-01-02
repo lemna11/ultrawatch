@@ -17,7 +17,7 @@ font_color = Color(1, 0, 0, 1)
 font_size = 32
 font_color = Color(0, 1, 0, 1)
 
-[node name="Hud" type="Control" node_paths=PackedStringArray("max_health", "cur_health")]
+[node name="Hud" type="Control" node_paths=PackedStringArray("max_health", "cur_health", "left_max_ammo", "left_cur_ammo", "right_max_ammo", "right_cur_ammo")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,8 +26,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_gppie")
-max_health = NodePath("HealthView/CurHealth")
-cur_health = NodePath("HealthView/MaxHealth")
+max_health = NodePath("HealthView/MaxHealth")
+cur_health = NodePath("HealthView/CurHealth")
+left_max_ammo = NodePath("LeftAmmoView/LeftMaxAmmo")
+left_cur_ammo = NodePath("LeftAmmoView/LeftCurAmmo")
+right_max_ammo = NodePath("RightAmmoView/RightMaxAmmo")
+right_cur_ammo = NodePath("RightAmmoView/RightCurAmmo")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -52,12 +56,10 @@ texture = ExtResource("5_rbci0")
 [node name="HealthView" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.07
-anchor_top = 0.8
-anchor_right = 0.2
-anchor_bottom = 0.93
-offset_top = 0.17596436
-offset_right = -0.31999207
+anchor_left = 0.3
+anchor_top = 0.6
+anchor_right = 0.7
+anchor_bottom = 0.7
 grow_vertical = 0
 alignment = 1
 
@@ -72,6 +74,56 @@ text = "/"
 label_settings = SubResource("LabelSettings_f2wx0")
 
 [node name="MaxHealth" type="Label" parent="HealthView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_gppie")
+horizontal_alignment = 2
+
+[node name="RightAmmoView" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.8
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="RightCurAmmo" type="Label" parent="RightAmmoView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_uk570")
+
+[node name="Separator" type="Label" parent="RightAmmoView"]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_f2wx0")
+
+[node name="RightMaxAmmo" type="Label" parent="RightAmmoView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_gppie")
+horizontal_alignment = 2
+
+[node name="LeftAmmoView" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.8
+anchor_right = 0.22900002
+anchor_bottom = 0.90000004
+offset_right = 0.19198608
+offset_bottom = -0.2000122
+
+[node name="LeftCurAmmo" type="Label" parent="LeftAmmoView"]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_uk570")
+
+[node name="Separator" type="Label" parent="LeftAmmoView"]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_f2wx0")
+
+[node name="LeftMaxAmmo" type="Label" parent="LeftAmmoView"]
 layout_mode = 2
 text = "100"
 label_settings = SubResource("LabelSettings_gppie")

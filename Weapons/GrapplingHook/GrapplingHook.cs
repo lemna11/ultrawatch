@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.GrapplingHook;
+
 public partial class GrapplingHook : Node3D, IWeapon {
     [Export]
     public PackedScene hook_scene;

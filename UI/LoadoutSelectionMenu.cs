@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 
 namespace UI;
 
+using Weapons;
+
 public partial class LoadoutSelectionMenu : Control {
     public Action<string, WeaponManager.EquipSide> OnWeaponSelected;
 

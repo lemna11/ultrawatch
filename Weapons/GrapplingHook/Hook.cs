@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.GrapplingHook;
+
 public partial class Hook : RigidBody3D {
     [Export]
     private float _move_speed;
