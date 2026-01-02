@@ -63,10 +63,10 @@ public partial class Player : CharacterBody3D, ITarget {
     }
 
     public override void _ExitTree() {
-        if (_weaponSelectionMenuInstance is not null) {
-            _weaponSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
-            _weaponSelectionMenuInstance.OnLegSelected -= OnLegSelected;
-            _weaponSelectionMenuInstance.OnBodySelected -= OnBodySelected;
+        if (_loadoutSelectionMenuInstance is not null) {
+            _loadoutSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
+            _loadoutSelectionMenuInstance.OnLegSelected -= OnLegSelected;
+            _loadoutSelectionMenuInstance.OnBodySelected -= OnBodySelected;
         }
     }
 
