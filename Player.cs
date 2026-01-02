@@ -32,6 +32,8 @@ public partial class Player : CharacterBody3D, ITarget {
     [Export]
     public int max_health = 100;
 
+    public float movementSpeedModifier = 1.0f;
+
     [Export]
     public Control weapon_selection_menu;
     private LoadoutSelectionMenu _weaponSelectionMenuInstance;
@@ -166,6 +168,7 @@ public partial class Player : CharacterBody3D, ITarget {
             direction += cameraBasis.X;
         direction = HorizontalNormal(direction);
         var speed = Input.IsActionPressed("move_crouch") ? crouch_speed : move_speed;
+        speed *= movementSpeedModifier;
 
         //apply gravity
         if (!IsOnFloor()) {
@@ -193,5 +196,9 @@ public partial class Player : CharacterBody3D, ITarget {
         var damage = damageAfterModifiers != 0 ? damageAfterModifiers : weapon.damage;
         cur_health = 0 > cur_health - damage ? 0 : (int)(cur_health - damage);
         update_hud();
+    }
+
+    public void ResetModifiers() {
+        movementSpeedModifier = 1.0f;
     }
 }
