@@ -64,7 +64,7 @@ public partial class Player : CharacterBody3D, ITarget {
         if (_weaponSelectionMenuInstance is not null) {
             _weaponSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
             _weaponSelectionMenuInstance.OnLegSelected -= OnLegSelected;
-            _weaponSelectionMenuInstance.OnBodySelected += OnBodySelected;
+            _weaponSelectionMenuInstance.OnBodySelected -= OnBodySelected;
         }
     }
 
