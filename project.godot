@@ -10,14 +10,14 @@ config_version=5
 
 [application]
 
-config/name="fake_game_project_v2"
+config/name="Ultrawatch"
 run/main_scene="uid://ndeyauh2tfu4"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="fake_game_project_v2"
+project/assembly_name="Ultrawatch"
 
 [editor]
 
