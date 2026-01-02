@@ -7,6 +7,7 @@ public partial class RocketLauncher : Node3D, IWeapon {
     public PackedScene rocket_scene;
 
     public async void Shoot(WeaponResource weapon, Player _) {
+        weapon.current_ammo -= 1;
         var rocket_spawn_point = weapon.player_camera;
         var rocket_instance = rocket_scene.Instantiate<Rocket>();
         rocket_instance.weapon = weapon;
