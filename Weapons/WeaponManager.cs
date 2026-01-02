@@ -106,6 +106,7 @@ public partial class WeaponManager : Node3D {
         bool updateHudNeeded = false;
         bool leftHasShot = false;
         bool rightHasShot = false;
+        bool reloadAttempt = Input.IsActionJustPressed("reload");
 
         switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionPressed("fire"), Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
             case (FireMode.Instant, true, true, _, false):
@@ -152,6 +153,16 @@ public partial class WeaponManager : Node3D {
             PlayAnimation(_current_left_weapon_instance, left_current_weapon.shoot_animation);
             PlaySound(_current_left_weapon_instance, left_current_weapon.shoot_sound);
             updateHudNeeded = true;
+        }
+        if (reloadAttempt
+                && (right_current_weapon is null || right_current_weapon.can_fire)
+                && (left_current_weapon is null || left_current_weapon.can_fire)) {
+            if (right_current_weapon is not null) {
+                Reload(right_current_weapon);
+            }
+            if (left_current_weapon is not null) {
+                Reload(left_current_weapon);
+            }
         }
         if (updateHudNeeded) {
             update_hud?.Invoke();
