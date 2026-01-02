@@ -8,10 +8,8 @@ public class HoverJet : ILegAbility {
     public int MaxHealthModifier => 25;
 
     public void Apply(Player player, double delta, Vector3 direction, ref Vector3 velocity) {
-        if (player.IsOnFloor()) {
-            velocity.X = player.Velocity.X;
-            velocity.Z = player.Velocity.Z;
-        }
+        velocity.X = player.Velocity.X;
+        velocity.Z = player.Velocity.Z;
         velocity = UniAccelDeccelHandler(velocity, direction, player.universal_accel, player.universal_deccel, delta, move_speed);
     }
 }
