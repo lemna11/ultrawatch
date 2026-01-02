@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.HealGun;
+
 public partial class HealProjectile : RigidBody3D {
     [Export]
     private Timer _lifeTimer;

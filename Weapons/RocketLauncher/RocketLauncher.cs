@@ -1,9 +1,10 @@
+using Weapons;
+
+namespace Weapons.RocketLauncher;
+
 public partial class RocketLauncher : Node3D, IWeapon {
     [Export]
     public PackedScene rocket_scene;
-
-    [Export]
-    public float fire_rate = 1.0f;
 
     public async void Shoot(WeaponResource weapon, Player _) {
         var rocket_spawn_point = weapon.player_camera;

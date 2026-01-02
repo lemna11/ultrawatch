@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.Shotgun;
+
 public partial class Shotgun : Node3D, IWeapon {
     [Export]
     public int pellet_count = 6;
@@ -19,7 +23,7 @@ public partial class Shotgun : Node3D, IWeapon {
 
     private void FirePellet(WeaponResource weapon) {
         var pellet_spawn_point = weapon.player_camera;
-        Vector3 direction = pellet_spawn_point.GlobalTransform.Basis.Y;
+        Vector3 direction = (-pellet_spawn_point.GlobalTransform.Basis.Z).Normalized();
 
         float yaw = Mathf.DegToRad(_rng.RandfRange(-spread_angle, spread_angle));
         float pitch = Mathf.DegToRad(_rng.RandfRange(-spread_angle, spread_angle));
@@ -29,7 +33,7 @@ public partial class Shotgun : Node3D, IWeapon {
         PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(pellet_spawn_point.GlobalPosition, pellet_spawn_point.GlobalPosition + direction * 100.0f);
         query.CollideWithBodies = true;
-        query.CollisionMask = 0xFFFFFFFF; // layer 1
+        query.CollisionMask = 0xFFFFFFFF;
 
         var result = spaceState.IntersectRay(query);
 
@@ -49,6 +53,7 @@ public partial class Shotgun : Node3D, IWeapon {
     }
 
     public void Shoot(WeaponResource weapon, Player _) {
+        weapon.current_ammo -= 1;
         for (int i = 0; i < pellet_count; i++) {
             FirePellet(weapon);
         }

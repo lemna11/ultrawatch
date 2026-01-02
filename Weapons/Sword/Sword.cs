@@ -1,3 +1,5 @@
+namespace Weapons;
+
 using System.Collections.Generic;
 
 public partial class Sword : Node3D, IWeapon {

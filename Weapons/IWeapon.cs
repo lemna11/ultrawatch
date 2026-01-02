@@ -1,3 +1,5 @@
+namespace Weapons;
+
 public interface IWeapon {
     void Shoot(WeaponResource weapon, Player player);
 
