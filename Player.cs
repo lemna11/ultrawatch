@@ -2,6 +2,8 @@ using Legs;
 
 using UI;
 
+using Weapons;
+
 using static Utils.Util;
 
 public partial class Player : CharacterBody3D, ITarget {
@@ -35,8 +37,8 @@ public partial class Player : CharacterBody3D, ITarget {
     public float movementSpeedModifier = 1.0f;
 
     [Export]
-    public Control weapon_selection_menu;
-    private LoadoutSelectionMenu _weaponSelectionMenuInstance;
+    public Control loadout_selection_menu;
+    private LoadoutSelectionMenu _loadoutSelectionMenuInstance;
 
     public int cur_health;
 
@@ -48,23 +50,23 @@ public partial class Player : CharacterBody3D, ITarget {
 
     public override void _Ready() {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        if (weapon_selection_menu as LoadoutSelectionMenu is null) throw new ArgumentNullException("weapon_selection_menu must be of type LoadoutSelectionMenu");
+        if (loadout_selection_menu as LoadoutSelectionMenu is null) throw new ArgumentNullException("loadout_selection_menu must be of type LoadoutSelectionMenu");
 
         ChangeLegAbility(new DefaultLegs());
         update_hud();
 
         var weaponManager = GetNode<WeaponManager>("WeaponManager");
-        _weaponSelectionMenuInstance = weapon_selection_menu as LoadoutSelectionMenu;
-        _weaponSelectionMenuInstance.OnWeaponSelected += weaponManager.ChangeWeapon;
-        _weaponSelectionMenuInstance.OnLegSelected += OnLegSelected;
-        _weaponSelectionMenuInstance.OnBodySelected += OnBodySelected;
+        _loadoutSelectionMenuInstance = loadout_selection_menu as LoadoutSelectionMenu;
+        _loadoutSelectionMenuInstance.OnWeaponSelected += weaponManager.ChangeWeapon;
+        _loadoutSelectionMenuInstance.OnLegSelected += OnLegSelected;
+        _loadoutSelectionMenuInstance.OnBodySelected += OnBodySelected;
     }
 
     public override void _ExitTree() {
-        if (_weaponSelectionMenuInstance is not null) {
-            _weaponSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
-            _weaponSelectionMenuInstance.OnLegSelected -= OnLegSelected;
-            _weaponSelectionMenuInstance.OnBodySelected -= OnBodySelected;
+        if (_loadoutSelectionMenuInstance is not null) {
+            _loadoutSelectionMenuInstance.OnWeaponSelected -= GetNode<WeaponManager>("WeaponManager").ChangeWeapon;
+            _loadoutSelectionMenuInstance.OnLegSelected -= OnLegSelected;
+            _loadoutSelectionMenuInstance.OnBodySelected -= OnBodySelected;
         }
     }
 
@@ -149,7 +151,7 @@ public partial class Player : CharacterBody3D, ITarget {
                 camera_pitch.RotationDegrees.Z
             );
         } else if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape) {
-            weapon_selection_menu?.Call("ToggleMenu");
+            loadout_selection_menu?.Call("ToggleMenu");
         } else
             base._Input(@event);
     }

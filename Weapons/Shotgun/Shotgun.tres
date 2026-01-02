@@ -10,3 +10,4 @@ damage = 6.0
 right_arm_weapon_offset = Vector3(0.15, -0.25, 0.15)
 weapon_model = ExtResource("2_mjqf7")
 shoot_sound = ExtResource("2_7wus3")
+magazine_size = 6

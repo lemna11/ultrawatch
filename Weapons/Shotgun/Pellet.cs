@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.Shotgun;
+
 public partial class Pellet : Decal {
     public override void _Ready() {
         var timer = GetTree().CreateTimer(5.0f);

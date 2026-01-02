@@ -1,3 +1,7 @@
+using System.Threading.Tasks;
+
+namespace Weapons;
+
 // TODO: refactor this class out of existence
 // Player should own both weapons directly
 // Weapons should do the input handling themselves
@@ -22,6 +26,8 @@ public partial class WeaponManager : Node3D {
     [Export]
     public WeaponResource left_current_weapon;
 
+    public event Action update_hud;
+
     private Node3D _current_right_weapon_instance;
     private Node3D _current_left_weapon_instance;
 
@@ -29,10 +35,10 @@ public partial class WeaponManager : Node3D {
         if (weaponPath != null) {
             switch (side) {
                 case EquipSide.Right:
-                    right_current_weapon = ResourceLoader.Load<WeaponResource>(weaponPath);
+                    right_current_weapon = ResourceLoader.Load(weaponPath).Duplicate() as WeaponResource;
                     break;
                 case EquipSide.Left:
-                    left_current_weapon = ResourceLoader.Load<WeaponResource>(weaponPath);
+                    left_current_weapon = ResourceLoader.Load(weaponPath).Duplicate() as WeaponResource;
                     break;
                 default:
                     throw new NotSupportedException();
@@ -89,23 +95,28 @@ public partial class WeaponManager : Node3D {
                 }
             }
         }
+        if (update_hud is not null) {
+            update_hud();
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event) {
         base._UnhandledInput(@event);
 
+        bool updateHudNeeded = false;
         bool leftHasShot = false;
         bool rightHasShot = false;
+        bool reloadAttempt = Input.IsActionJustPressed("reload");
 
-        switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
-            case (FireMode.Instant, true, true, false):
+        switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionPressed("fire"), Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
+            case (FireMode.Instant, true, true, _, false):
                 (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
                 rightHasShot = true;
                 break;
-            case (FireMode.Charge, true, true, false):
+            case (FireMode.Charge, true, _, true, false):
                 (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
                 break;
-            case (FireMode.Charge, true, false, true):
+            case (FireMode.Charge, true, _, false, true):
                 if ((_current_right_weapon_instance as IWeapon).ShootReleased(right_current_weapon, player as Player)) {
                     rightHasShot = true;
                 }
@@ -114,15 +125,15 @@ public partial class WeaponManager : Node3D {
                 break;
         }
 
-        switch ((left_current_weapon?.fireMode, left_current_weapon?.can_fire, Input.IsActionJustPressed("fire_left"), Input.IsActionJustReleased("fire_left"))) {
-            case (FireMode.Instant, true, true, false):
+        switch ((left_current_weapon?.fireMode, left_current_weapon?.can_fire, Input.IsActionPressed("fire_left"), Input.IsActionJustPressed("fire_left"), Input.IsActionJustReleased("fire_left"))) {
+            case (FireMode.Instant, true, true, _, false):
                 (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
                 leftHasShot = true;
                 break;
-            case (FireMode.Charge, true, true, false):
+            case (FireMode.Charge, true, _, true, false):
                 (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
                 break;
-            case (FireMode.Charge, true, false, true):
+            case (FireMode.Charge, true, _, false, true):
                 if ((_current_left_weapon_instance as IWeapon).ShootReleased(left_current_weapon, player as Player)) {
                     leftHasShot = true;
                 }
@@ -135,11 +146,26 @@ public partial class WeaponManager : Node3D {
             ShootAgainIn(right_current_weapon, 1.0f / right_current_weapon.fire_rate);
             PlayAnimation(_current_right_weapon_instance, right_current_weapon.shoot_animation);
             PlaySound(_current_right_weapon_instance, right_current_weapon.shoot_sound);
+            updateHudNeeded = true;
         }
         if (leftHasShot && left_current_weapon is not null) {
             ShootAgainIn(left_current_weapon, 1.0f / left_current_weapon.fire_rate);
             PlayAnimation(_current_left_weapon_instance, left_current_weapon.shoot_animation);
             PlaySound(_current_left_weapon_instance, left_current_weapon.shoot_sound);
+            updateHudNeeded = true;
+        }
+        if (reloadAttempt
+                && (right_current_weapon is null || right_current_weapon.can_fire)
+                && (left_current_weapon is null || left_current_weapon.can_fire)) {
+            if (right_current_weapon is not null) {
+                Reload(right_current_weapon);
+            }
+            if (left_current_weapon is not null) {
+                Reload(left_current_weapon);
+            }
+        }
+        if (updateHudNeeded) {
+            update_hud?.Invoke();
         }
     }
 
@@ -188,7 +214,30 @@ public partial class WeaponManager : Node3D {
             current_weapon.can_fire = true;
             current_weapon.timer?.QueueFree();
             current_weapon.timer = null;
+            if (current_weapon.current_ammo <= 0) {
+                Reload(current_weapon);
+            }
         };
         AddChild(current_weapon.timer);
+    }
+
+    private async void Reload(WeaponResource weapon) {
+        if (weapon is null) return;
+        weapon.can_fire = false;
+        weapon.timer = new Timer() {
+            WaitTime = weapon.reload_time,
+            OneShot = true,
+            Autostart = true
+        };
+        weapon.timer.Timeout += () => {
+            weapon.current_ammo = weapon.magazine_size;
+            weapon.can_fire = true;
+            weapon.timer.QueueFree();
+            weapon.timer = null;
+            if (update_hud is not null) {
+                update_hud();
+            }
+        };
+        AddChild(weapon.timer);
     }
 }

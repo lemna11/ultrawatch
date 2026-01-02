@@ -1,3 +1,7 @@
+using Weapons;
+
+namespace Weapons.RocketLauncher;
+
 public partial class Rocket : RigidBody3D {
     [Export]
     private Timer _life_timer;
