@@ -1,3 +1,8 @@
+public enum FireMode {
+    Instant,
+    Charge
+}
+
 public partial class WeaponResource : Resource {
     [Export]
     public float damage = 10.0f;
@@ -22,6 +27,9 @@ public partial class WeaponResource : Resource {
 
     [Export]
     public AudioStream shoot_sound;
+
+    [Export]
+    public FireMode fireMode = FireMode.Instant;
 
     public Timer timer;
 

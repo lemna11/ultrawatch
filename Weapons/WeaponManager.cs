@@ -1,3 +1,9 @@
+// TODO: refactor this class out of existence
+// Player should own both weapons directly
+// Weapons should do the input handling themselves
+// Animations/Sounds handling should be exposed through signals on the weapon interface
+// Ideally we also refactor WeaponResource out of existence too
+// There is just too much variance between weapons to make a general manager class a good idea
 public partial class WeaponManager : Node3D {
     public enum EquipSide {
         Right,
@@ -87,14 +93,50 @@ public partial class WeaponManager : Node3D {
 
     public override void _UnhandledInput(InputEvent @event) {
         base._UnhandledInput(@event);
-        if (Input.IsActionPressed("fire") && right_current_weapon is { can_fire: true } && _current_right_weapon_instance is not null) {
-            (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
+
+        bool leftHasShot = false;
+        bool rightHasShot = false;
+
+        switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
+            case (FireMode.Instant, true, true, false):
+                (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
+                rightHasShot = true;
+                break;
+            case (FireMode.Charge, true, true, false):
+                (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
+                break;
+            case (FireMode.Charge, true, false, true):
+                if ((_current_right_weapon_instance as IWeapon).ShootReleased(right_current_weapon, player as Player)) {
+                    rightHasShot = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        switch ((left_current_weapon?.fireMode, left_current_weapon?.can_fire, Input.IsActionJustPressed("fire_left"), Input.IsActionJustReleased("fire_left"))) {
+            case (FireMode.Instant, true, true, false):
+                (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
+                leftHasShot = true;
+                break;
+            case (FireMode.Charge, true, true, false):
+                (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
+                break;
+            case (FireMode.Charge, true, false, true):
+                if ((_current_left_weapon_instance as IWeapon).ShootReleased(left_current_weapon, player as Player)) {
+                    leftHasShot = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (rightHasShot && right_current_weapon is not null) {
             ShootAgainIn(right_current_weapon, 1.0f / right_current_weapon.fire_rate);
             PlayAnimation(_current_right_weapon_instance, right_current_weapon.shoot_animation);
             PlaySound(_current_right_weapon_instance, right_current_weapon.shoot_sound);
         }
-        if (Input.IsActionPressed("fire_left") && left_current_weapon is { can_fire: true } && _current_left_weapon_instance is not null) {
-            (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
+        if (leftHasShot && left_current_weapon is not null) {
             ShootAgainIn(left_current_weapon, 1.0f / left_current_weapon.fire_rate);
             PlayAnimation(_current_left_weapon_instance, left_current_weapon.shoot_animation);
             PlaySound(_current_left_weapon_instance, left_current_weapon.shoot_sound);
