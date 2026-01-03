@@ -1,3 +1,5 @@
+namespace Weapons;
+
 public partial class Projectile : RigidBody3D {
     [Export]
     private Timer _life_timer;

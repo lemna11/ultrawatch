@@ -1,3 +1,5 @@
+namespace Weapons;
+
 public partial class AutoPistol : Node3D, IWeapon {
     [Export]
     public PackedScene projectile_scene;
@@ -12,6 +14,7 @@ public partial class AutoPistol : Node3D, IWeapon {
     }
 
     public void Shoot(WeaponResource weapon, Player player) {
+        weapon.current_ammo -= 1;
         for (int i = 0; i < 3; i++) {
             var projectile_spawn_point = weapon.player_camera;
             var projectile_instance = projectile_scene.Instantiate<Projectile>();

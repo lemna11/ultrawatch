@@ -100,6 +100,44 @@ public partial class WeaponManager : Node3D {
         }
     }
 
+    public override void _Process(double delta) {
+        base._Process(delta);
+
+        bool updateHudNeeded = false;
+        bool leftHasShot = false;
+        bool rightHasShot = false;
+
+        if (right_current_weapon?.fireMode == FireMode.Instant
+            && right_current_weapon?.can_fire == true
+            && Input.IsActionPressed("fire")) {
+            (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
+            rightHasShot = true;
+        }
+
+        if (left_current_weapon?.fireMode == FireMode.Instant
+            && left_current_weapon?.can_fire == true
+            && Input.IsActionPressed("fire_left")) {
+            (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
+            leftHasShot = true;
+        }
+
+        if (rightHasShot && right_current_weapon is not null) {
+            ShootAgainIn(right_current_weapon, 1.0f / right_current_weapon.fire_rate);
+            PlayAnimation(_current_right_weapon_instance, right_current_weapon.shoot_animation);
+            PlaySound(_current_right_weapon_instance, right_current_weapon.shoot_sound);
+            updateHudNeeded = true;
+        }
+        if (leftHasShot && left_current_weapon is not null) {
+            ShootAgainIn(left_current_weapon, 1.0f / left_current_weapon.fire_rate);
+            PlayAnimation(_current_left_weapon_instance, left_current_weapon.shoot_animation);
+            PlaySound(_current_left_weapon_instance, left_current_weapon.shoot_sound);
+            updateHudNeeded = true;
+        }
+        if (updateHudNeeded) {
+            update_hud?.Invoke();
+        }
+    }
+
     public override void _UnhandledInput(InputEvent @event) {
         base._UnhandledInput(@event);
 
@@ -108,15 +146,12 @@ public partial class WeaponManager : Node3D {
         bool rightHasShot = false;
         bool reloadAttempt = Input.IsActionJustPressed("reload");
 
-        switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionPressed("fire"), Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
-            case (FireMode.Instant, true, true, _, false):
-                (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
-                rightHasShot = true;
-                break;
-            case (FireMode.Charge, true, _, true, false):
+        // Handle charge weapons in _UnhandledInput since they rely on JustPressed/JustReleased
+        switch ((right_current_weapon?.fireMode, right_current_weapon?.can_fire, Input.IsActionJustPressed("fire"), Input.IsActionJustReleased("fire"))) {
+            case (FireMode.Charge, true, true, false):
                 (_current_right_weapon_instance as IWeapon).Shoot(right_current_weapon, player as Player);
                 break;
-            case (FireMode.Charge, true, _, false, true):
+            case (FireMode.Charge, true, false, true):
                 if ((_current_right_weapon_instance as IWeapon).ShootReleased(right_current_weapon, player as Player)) {
                     rightHasShot = true;
                 }
@@ -125,15 +160,11 @@ public partial class WeaponManager : Node3D {
                 break;
         }
 
-        switch ((left_current_weapon?.fireMode, left_current_weapon?.can_fire, Input.IsActionPressed("fire_left"), Input.IsActionJustPressed("fire_left"), Input.IsActionJustReleased("fire_left"))) {
-            case (FireMode.Instant, true, true, _, false):
-                (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
-                leftHasShot = true;
-                break;
-            case (FireMode.Charge, true, _, true, false):
+        switch ((left_current_weapon?.fireMode, left_current_weapon?.can_fire, Input.IsActionJustPressed("fire_left"), Input.IsActionJustReleased("fire_left"))) {
+            case (FireMode.Charge, true, true, false):
                 (_current_left_weapon_instance as IWeapon).Shoot(left_current_weapon, player as Player);
                 break;
-            case (FireMode.Charge, true, _, false, true):
+            case (FireMode.Charge, true, false, true):
                 if ((_current_left_weapon_instance as IWeapon).ShootReleased(left_current_weapon, player as Player)) {
                     leftHasShot = true;
                 }
