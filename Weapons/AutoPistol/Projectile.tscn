@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8w2f8x2v2w5c"]
+
+[ext_resource type="Script" uid="uid://b7dg61tmix3wv" path="res://Weapons/AutoPistol/Projectile.cs" id="1_abcde"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12345"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_67890"]
+radius = 0.05
+
+[sub_resource type="SphereMesh" id="SphereMesh_abcde"]
+radius = 0.05
+height = 0.1
+
+[node name="Projectile" type="RigidBody3D" node_paths=PackedStringArray("_life_timer")]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_12345")
+gravity_scale = 0.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_abcde")
+_life_timer = NodePath("Timer")
+_move_speed = 150.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_67890")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_abcde")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
