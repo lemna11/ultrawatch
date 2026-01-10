@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://ndeyauh2tfu4"]
 
 [ext_resource type="PackedScene" uid="uid://csdr2fk3caunx" path="res://Player.tscn" id="1_glv2v"]
-[ext_resource type="PackedScene" uid="uid://beycd1cquv30n" path="res://Maps/csg maps/koth2_power_station.tscn" id="1_r0du0"]
 [ext_resource type="PackedScene" uid="uid://ceqy8rsnkb044" path="res://TargetDummy.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://blqstwkgpb72a" path="res://Maps/csg maps/koth3.tscn" id="3_r0du0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_glv2v"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -19,8 +19,6 @@ glow_enabled = true
 
 [node name="Main" type="Node3D"]
 
-[node name="Node3D" parent="." instance=ExtResource("1_r0du0")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_r0du0")
 
@@ -36,8 +34,9 @@ offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_glv2v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.26493, 2.209279, 0)
-leg_type = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.093727, 2.209279, 0)
 
 [node name="TargetDummy" parent="." instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.878809, 1.2524244, 3.7713456)
+
+[node name="Node3D" parent="." instance=ExtResource("3_r0du0")]
