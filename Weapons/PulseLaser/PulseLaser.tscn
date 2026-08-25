@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7jbbpf70ejfj"]
+
+[ext_resource type="Script" uid="uid://duwx8duy18i4n" path="res://Weapons/PulseLaser/PulseLaser.cs" id="1_k2xh7"]
+
+[node name="PulseLaser" type="Node3D"]
+script = ExtResource("1_k2xh7")
+PulseLaserTracerColor = Color(0.15288112, 0, 0.9683319, 1)

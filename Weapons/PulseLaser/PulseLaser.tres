@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Weapons/WeaponResource.cs" id="1_weapon"]
+[ext_resource type="PackedScene" path="res://Weapons/PulseLaser/PulseLaser.tscn" id="2_pulse"]
+
+[resource]
+script = ExtResource("1_weapon")
+
+damage = 80.0
+fire_rate = 1.0
+reload_time = 1.0
+
+weapon_model = ExtResource("2_pulse")
+
+fireMode = 1
+magazine_size = 1
