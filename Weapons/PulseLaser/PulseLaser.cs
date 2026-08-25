@@ -17,21 +17,36 @@ public partial class PulseLaser : Node3D, IWeapon{
 	float DmgFalloffMultiplier = 0.15f;
 	[Export]
 	float DmgFalloffIntervalLength = 5;
-
 	[Export]
 	int MaxInterval = 5;
-
 	[Export]
 	float FirstInterval = 10.0f;
 
-	[Export]
-	float PulseLaserTracerRadius = 0.7f;
 
 	[Export]
-	float PulseLaserTracerDuration = 0.3f;
-	
+	float PulseLaserCoreTracerStartRadius = 0.08f;
 	[Export]
-	Color PulseLaserTracerColor;
+	float PulseLaserCoreTracerEndRadius = 0.16f;
+	[Export]
+	float PulseLaserTracerDuration = 0.3f;
+
+	[Export]
+	Color PulseLaserCoreTracerColor;
+	[Export]
+	float PulseLaserCoreTracerAlpha = 0.8f;
+	[Export]
+	float PulseLaserCoreTracerGlow = 6.0f;
+	[Export]
+	float PulseLaserHaloTracerStartRadius = 0.7f;
+	[Export]
+	float PulseLaserHaloTracerEndRadius = 0.7f;
+	[Export]
+	Color PulseLaserHaloTracerColor;
+	[Export]
+	float PulseLaserHaloTracerAlpha = 0.1f;
+
+	[Export]
+	float PulseLaserHaloTracerGlow = 24.0f;
 	
 
 	bool IsCharging = false;
@@ -51,7 +66,6 @@ public partial class PulseLaser : Node3D, IWeapon{
 	}
 
 	public void Shoot(WeaponResource weapon, Player player) {
-		IsCharging = true;
 		if (IsCharging){
 			return;
 		}
@@ -59,6 +73,10 @@ public partial class PulseLaser : Node3D, IWeapon{
 		CurrentWindupLength = 0.0f;
 	}
 	public bool ShootReleased(WeaponResource weapon, Player player) {
+		if (!IsCharging)
+		{
+			return false;
+		}
 		IsCharging = false;
 		weapon.current_ammo--;
 		if (CurrentWindupLength < PulseLaserWindupLength)
@@ -73,16 +91,24 @@ public partial class PulseLaser : Node3D, IWeapon{
 			MaxRange
 		);
 		Vector3 TracerOrigin = player.GlobalPosition;
-		_= WeaponUtils.WeaponUtils.DrawTracer(player,
+		WeaponUtils.WeaponUtils.DrawTracer(player,
 			TracerOrigin,
 			Result.Position,
-			PulseLaserTracerRadius,
 			PulseLaserTracerDuration,
-			PulseLaserTracerColor
+			PulseLaserCoreTracerStartRadius,
+			PulseLaserCoreTracerEndRadius,
+			PulseLaserCoreTracerColor,
+			PulseLaserCoreTracerAlpha,
+			PulseLaserCoreTracerGlow,
+			PulseLaserHaloTracerStartRadius,
+			PulseLaserHaloTracerEndRadius,
+			PulseLaserHaloTracerColor,
+			PulseLaserHaloTracerAlpha,
+			PulseLaserHaloTracerGlow
 			);
 
 		if (Result.Hit) {
-			if(Result.Collider is Player HitPlayer) {
+			if(Result.Collider is ITarget HitPlayer) {
 				float Dmg = WeaponUtils.WeaponUtils.CalculateDamageFalloff(PulseLaserDmg,
 					Result.Distance,
 					FirstInterval,

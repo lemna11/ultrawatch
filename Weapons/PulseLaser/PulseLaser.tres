@@ -7,10 +7,10 @@
 script = ExtResource("1_weapon")
 
 damage = 80.0
-fire_rate = 1.0
-reload_time = 1.0
+fire_rate = 9999.0
+reload_time = 3.0
 
 weapon_model = ExtResource("2_pulse")
 
 fireMode = 1
-magazine_size = 1
+magazine_size = 6

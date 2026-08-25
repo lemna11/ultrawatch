@@ -7,14 +7,16 @@ using Weapons;
 public static class WeaponUtils {
 
     //This function returns either the object that was hit or the max length
-    public static async Task DrawTracer(
+    private static async Task DrawTracerHelper(
         Node3D ParentNode,
         Vector3 Origin,
         Vector3 Destination,
-        float Radius,
         float Lifetime,
-        Color TracerColor
-    ){
+        float StartRadius,
+        float EndRadius,
+        Color TracerColor,
+        float TracerAlpha,
+        float TracerGlow){
         Vector3 DirectionVector = Destination - Origin;
         float Length = DirectionVector.Length();
 
@@ -23,12 +25,12 @@ public static class WeaponUtils {
         }
         Vector3 Direction = DirectionVector.Normalized();
         Vector3 MidPoint = (Origin + Destination) / 2.0f;
-        var Cylinder = new CylinderMesh{
+        var CoreCylinder = new CylinderMesh{
             Height = Length,
 
             // Width here means full beam diameter.
-            TopRadius = Radius,
-            BottomRadius = Radius,
+            TopRadius = EndRadius,
+            BottomRadius = StartRadius,
 
             // You really don't need 64 sides for a tiny tracer.
             RadialSegments = 8
@@ -37,26 +39,36 @@ public static class WeaponUtils {
 
         var Material = new StandardMaterial3D
         {
-            AlbedoColor = TracerColor,
-            ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded
+            AlbedoColor = new Color(
+                TracerColor.R,
+                TracerColor.G,
+                TracerColor.B,
+                TracerAlpha
+            ),
+            ShadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel,
+            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
+            EmissionEnabled = true,
+            Emission = TracerColor,
+            EmissionEnergyMultiplier = TracerGlow
         };
 
-        Cylinder.Material = Material;
+        CoreCylinder.Material = Material;
 
-        var Tracer = new MeshInstance3D
+        var CoreTracer = new MeshInstance3D
         {
-            Mesh = Cylinder,
-            CastShadow = GeometryInstance3D.ShadowCastingSetting.Off
+            Mesh = CoreCylinder,
+            CastShadow = GeometryInstance3D.ShadowCastingSetting.Off,
+            TopLevel = true
         };
 
-        ParentNode.AddChild(Tracer);
+        ParentNode.AddChild(CoreTracer);
 
         Quaternion Rotation = new Quaternion(
             Vector3.Up,
             Direction
         );
 
-        Tracer.GlobalTransform = new Transform3D(
+        CoreTracer.GlobalTransform = new Transform3D(
             new Basis(Rotation),
             MidPoint
         );
@@ -66,10 +78,48 @@ public static class WeaponUtils {
             SceneTreeTimer.SignalName.Timeout
         );
 
-        if (GodotObject.IsInstanceValid(Tracer)){
-            Tracer.QueueFree();
+        if (GodotObject.IsInstanceValid(CoreTracer)){
+            CoreTracer.QueueFree();
         }
+
     }
+    public static void DrawTracer(
+        Node3D ParentNode,
+        Vector3 Origin,
+        Vector3 Destination,
+        float Lifetime,
+        float CoreStartRadius,
+        float CoreEndRadius,
+        Color CoreTracerColor,
+        float CoreTracerAlpha,
+        float CoreTracerGlow,
+        float HaloStartRadius,
+        float HaloEndRadius,
+        Color HaloTracerColor,
+        float HaloTracerAlpha,
+        float HaloTracerGlow
+    ){
+       _= DrawTracerHelper(ParentNode,
+       Origin,
+       Destination,
+       Lifetime,
+       CoreStartRadius,
+       CoreEndRadius,
+       CoreTracerColor,
+       CoreTracerAlpha,
+       CoreTracerGlow);
+
+       _= DrawTracerHelper(ParentNode,
+       Origin,
+       Destination,
+       Lifetime,
+       HaloStartRadius,
+       HaloEndRadius,
+       HaloTracerColor,
+       HaloTracerAlpha,
+       HaloTracerGlow);
+    }
+
     
     public struct HitscanResult
     {
@@ -105,7 +155,7 @@ public static class WeaponUtils {
     public static HitscanResult Hitscan(Player player, World3D WorldNode, WeaponResource Weapon, float WeaponMaxRange) {
 
         var SpaceState = WorldNode.DirectSpaceState;
-        Camera3D Cam = player.GetNode<Camera3D>("Camera3D");
+        Camera3D Cam = player.GetNode<Camera3D>("CameraYaw/CameraPitch/Camera3D");
         Vector2 MousePosition = player.GetViewport().GetMousePosition();
         Vector3 Origin = Cam.ProjectRayOrigin(MousePosition);
         Vector3 End = Origin + Cam.ProjectRayNormal(MousePosition) * WeaponMaxRange;
