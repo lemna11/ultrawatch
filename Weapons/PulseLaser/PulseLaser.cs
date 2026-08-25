@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Weapons;
 public partial class PulseLaser : Node3D, IWeapon{
     
@@ -6,7 +8,7 @@ public partial class PulseLaser : Node3D, IWeapon{
     [Export]
     float PulseLaserWindupLength = 2.5f;
     float CurrentWindupLength = 0.0f;
-    int RayLength = 100;
+    int RayLength = 100;//This is the max range of the pulse laser
     //This is intended to behave similar to hanzos bow in overwatch but as a hitscan
     //key difference is if the player doesnt fully charge the shot, the shot doesnt happen at all 
     //the the current Windup length is reset
@@ -36,6 +38,9 @@ public partial class PulseLaser : Node3D, IWeapon{
         //And I also need to exclude the players own hitbox
         //since the docs said that I need to explicitly remove that
 
+        //Next up is: iterate over results. and if the closest object is a hostile player do the dmg
+        //also draw a colored line between the player and the point of aim (shot animation stuff)
+
         var SpaceState = GetWorld3D().DirectSpaceState;
         Camera3D Cam = player.GetNode<Camera3D>("Camera3D");
         Vector2 MousePosition = player.GetViewport().GetMousePosition();
@@ -44,7 +49,7 @@ public partial class PulseLaser : Node3D, IWeapon{
         var Query = PhysicsRayQueryParameters3D.Create(Origin, End, player.CollisionMask);
         var Result = SpaceState.IntersectRay(Query);
         
-            
+        //Iterate over all results by key in here (I fucking suck at c# so I have no idea how.)
         
     }
 }
