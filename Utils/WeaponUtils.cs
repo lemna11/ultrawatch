@@ -73,12 +73,41 @@ public static class WeaponUtils {
             MidPoint
         );
 
-        await ParentNode.ToSignal(
-            ParentNode.GetTree().CreateTimer(Lifetime),
-            SceneTreeTimer.SignalName.Timeout
+        Color FadeColor = new Color(
+            Material.AlbedoColor.R,
+            Material.AlbedoColor.G,
+            Material.AlbedoColor.B,
+            0.0f
         );
 
-        if (GodotObject.IsInstanceValid(CoreTracer)){
+        Tween FadeTween = ParentNode.CreateTween()
+            .SetParallel(true);
+
+        FadeTween.TweenProperty(
+            Material,
+            "albedo_color",
+            FadeColor,
+            Lifetime
+        )
+        .SetTrans(Tween.TransitionType.Expo)
+        .SetEase(Tween.EaseType.In);
+
+        FadeTween.TweenProperty(
+            Material,
+            "emission_energy_multiplier",
+            0.0,
+            Lifetime
+        )
+        .SetTrans(Tween.TransitionType.Expo)
+        .SetEase(Tween.EaseType.In);
+
+        await ParentNode.ToSignal(
+            FadeTween,
+            Tween.SignalName.Finished
+        );
+
+        if (GodotObject.IsInstanceValid(CoreTracer))
+        {
             CoreTracer.QueueFree();
         }
 

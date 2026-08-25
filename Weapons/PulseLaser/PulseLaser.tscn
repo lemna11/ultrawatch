@@ -5,12 +5,13 @@
 [node name="PulseLaser" type="Node3D"]
 script = ExtResource("1_k2xh7")
 PulseLaserWindupLength = 1.0
-PulseLaserTracerDuration = 0.2
+PulseLaserCoreTracerStartRadius = 0.04
+PulseLaserCoreTracerEndRadius = 0.08
+PulseLaserTracerDuration = 0.15
 PulseLaserCoreTracerColor = Color(0.7529246, 0.261956, 0, 1)
 PulseLaserCoreTracerAlpha = 0.6
-PulseLaserCoreTracerGlow = 1.0
-PulseLaserHaloTracerStartRadius = 0.3
-PulseLaserHaloTracerEndRadius = 0.6
+PulseLaserCoreTracerGlow = 2.0
+PulseLaserHaloTracerStartRadius = 0.15
+PulseLaserHaloTracerEndRadius = 0.3
 PulseLaserHaloTracerColor = Color(0, 0, 1, 1)
-PulseLaserHaloTracerAlpha = 0.4
-PulseLaserHaloTracerGlow = 6.0
+PulseLaserHaloTracerGlow = 36.0
