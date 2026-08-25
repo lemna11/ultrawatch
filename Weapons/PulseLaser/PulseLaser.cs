@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Weapons;
@@ -48,8 +49,37 @@ public partial class PulseLaser : Node3D, IWeapon{
         Vector3 End = Origin + Cam.ProjectRayNormal(MousePosition) * RayLength;
         var Query = PhysicsRayQueryParameters3D.Create(Origin, End, player.CollisionMask);
         var Result = SpaceState.IntersectRay(Query);
-        
+        float LowestEuclideanDist = RayLength;
+        int ColliderIDOfThatObject = 0;
         //Iterate over all results by key in here (I fucking suck at c# so I have no idea how.)
+        foreach(var ResultEntry in Result) {//the key with this should be the collision
+        //ID and the value should be the vector of the collision object.
+
+
+            Vector3 CollisionVector = ResultEntry.Key.As<Vector3>();
+            int ColliderID = ResultEntry.Value.As<int>();
+            //in all honesty I have no idea if this is correct. I need to do more reseach.
+
+            float EuclideanDist = (CollisionVector - player.Position).Length();
+            
+            bool IsValidCollision = false;
+            //ADD CODEBLOCK TO CHECK IF THE COLLISION ID BELONGS TO THE PLAYER
+            //OR ANY PLAYER SUBOBJECT OF THAT PLAYER
+
+
+            if(EuclideanDist < LowestEuclideanDist && IsValidCollision) {//THIS WILL NOT WORK!
+            //I need to add some sort of exclusion mechanic collisions with IDs belonging
+            //to the origin player
+                LowestEuclideanDist = EuclideanDist;
+                ColliderIDOfThatObject = ColliderID;
+            }
+
+        }
         
+        //Add logic that checks if the collision ID belongs to an enemy player
+        //and if yes, do damage to that player
+        //at the end draw a BLUE line between the points.
+
+
     }
 }
