@@ -38,7 +38,7 @@ public partial class PulseLaser : Node3D, IWeapon{
 	[Export]
 	float PulseLaserCoreTracerGlow = 6.0f;
 
-	
+
 	[Export]
 	float PulseLaserHaloTracerStartRadius = 0.7f;
 	[Export]
@@ -93,9 +93,16 @@ public partial class PulseLaser : Node3D, IWeapon{
 			weapon,
 			MaxRange
 		);
-		float PulseLaserCoreTracerEndRadius = PulseLaserCoreTracerStartRadius + (PulseLaserCoreTracerRadiusGain * (Result.Distance / 10));
-		float PulseLaserHaloTracerEndRadius = PulseLaserHaloTracerStartRadius + (PulseLaserHaloTracerRadiusGain * (Result.Distance / 10));
+	
 		Vector3 TracerOrigin = player.GlobalPosition;
+		float TracerDistance = TracerOrigin.DistanceTo(Result.Position);
+		float PulseLaserCoreTracerEndRadius =
+			PulseLaserCoreTracerStartRadius +
+			PulseLaserCoreTracerRadiusGain * (TracerDistance / 10.0f);
+
+		float PulseLaserHaloTracerEndRadius =
+			PulseLaserHaloTracerStartRadius +
+			PulseLaserHaloTracerRadiusGain * (TracerDistance / 10.0f);
 		WeaponUtils.WeaponUtils.DrawTracer(player,
 			TracerOrigin,
 			Result.Position,
