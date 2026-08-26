@@ -26,7 +26,7 @@ public partial class PulseLaser : Node3D, IWeapon{
 	[Export]
 	float PulseLaserCoreTracerStartRadius = 0.08f;
 	[Export]
-	float PulseLaserCoreTracerRadiusGain = 0.1f;
+	float PulseLaserCoreTracerRadiusGain = 0.1f; // per 10 units
 	[Export]
 	float PulseLaserCoreTracerDuration = 0.3f;
 	[Export]
@@ -40,9 +40,9 @@ public partial class PulseLaser : Node3D, IWeapon{
 
 
 	[Export]
-	float PulseLaserHaloTracerStartRadius = 0.7f;
+	float PulseLaserHaloTracerStartRadius = 0.7f; 
 	[Export]
-	float PulseLaserHaloTracerRadiusGain= 0.1f;
+	float PulseLaserHaloTracerRadiusGain= 0.1f; //per 10 units
 	[Export]
 	Color PulseLaserHaloTracerColor;
 	[Export]
